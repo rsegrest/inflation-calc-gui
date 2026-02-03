@@ -15,11 +15,11 @@ let centerTheBoxStyle = {
     verticalAlign: 'middle',
 } as React.CSSProperties;
 
-let middle51style = {
-    width: '51%',
-    margin: 'auto',
-    verticalAlign: 'middle',
-} as React.CSSProperties;
+// let middle51style = {
+//     width: '51%',
+//     margin: 'auto',
+//     verticalAlign: 'middle',
+// } as React.CSSProperties;
 
 let centerBottomStyle = {
     textAlign: 'left',
@@ -65,14 +65,9 @@ const ResultLayout = ({
             >
                 <Col
                     sm={4}
-                // style={{
-                //     width: '40%',
-                // }}
-                // className='text-center'
-                // style={middle51style}
                 >
                     <SpendingPower
-                        width={width}
+                        // width={width}
                         nowDollars={nowDollars}
                         thenDollars={thenDollars}
                         startZeroBasedMonth={startZeroBasedMonth}
@@ -85,7 +80,7 @@ const ResultLayout = ({
                     style={centerBottomStyle as React.CSSProperties}
                 >
                     <InflationRate
-                        width={width}
+                        // width={width}
                         inflationRate={inflationRate}
                         lostValue={lostValue}
                         startMonth={getNameOfMonth(startZeroBasedMonth)}

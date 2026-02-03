@@ -1,7 +1,7 @@
 import { COLORS } from '../../constants';
 import DeviceDetector from '../../util/DeviceDetector';
 
-let boxStyle = {
+let boxStyle: React.CSSProperties = {
     background: COLORS.SAFFRON, // saffron
     border: '5px solid black',
     borderRadius: '18px',
@@ -12,22 +12,28 @@ let boxStyle = {
     marginRight: 'auto',
 }
 
-let largeType = {
+let largeType: React.CSSProperties = {
     color: COLORS.FLAME,
     fontSize: '3rem',
 }
 
-let minorEmphasis = {
+let minorEmphasis: React.CSSProperties = {
     color: COLORS.FLAME,
     fontSize: '1.2rem'
 }
 
 const InflationRate = ({
-    width,
+    // width,
     inflationRate,
     lostValue,
     startMonth,
     startYear,
+}: {
+    // width?: number,
+    inflationRate: number,
+    lostValue: number,
+    startMonth: string,
+    startYear: number,
 }) => {
     const deviceType = DeviceDetector();
     // let boxWidth = '20rem';
@@ -79,7 +85,7 @@ const InflationRate = ({
                 className='mont-xbold'
                 style={largeType}
             >
-                {Math.floor((1-(lostValue/100))*100)}¢
+                {Math.floor((1 - (lostValue / 100)) * 100)}¢
             </div>
             <div
                 className='mont-medium'
@@ -93,5 +99,6 @@ const InflationRate = ({
                 >{startMonth} {startYear}</span>
             </div>
         </div>
-    )}
+    )
+}
 export default InflationRate;

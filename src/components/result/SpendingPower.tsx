@@ -3,13 +3,13 @@ import { getNameOfMonth } from '../../util/formulas';
 import DeviceDetector from '../../util/DeviceDetector';
 
 const SpendingPower = ({
-    width,
+    // width,
     nowDollars,
     thenDollars,
     startZeroBasedMonth,
     startYear,
 }: {
-    width?: number,
+    // width?: number,
     nowDollars: number,
     thenDollars: number,
     startZeroBasedMonth: number,

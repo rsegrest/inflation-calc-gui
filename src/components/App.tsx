@@ -74,8 +74,11 @@ const getChart = ({
 const App = () => {
 
     const nowDate = new Date();
-    const currentYear = nowDate.getFullYear();
-    const currentZeroBasedMonth = getLatestMonthWithData(nowDate.getMonth(), currentYear);
+    let currentYear = nowDate.getFullYear();
+    // let { currentYear: latestYear, currentZeroBasedMonth: latestMonth } = getLatestMonthWithData(nowDate.getMonth(), currentYear);
+    const lastestDataMonth = getLatestMonthWithData(nowDate.getMonth(), currentYear);
+    currentYear = lastestDataMonth.latestYear;
+    let currentZeroBasedMonth = lastestDataMonth.latestMonth;
 
     const [startingAmount, setStartingAmount] = React.useState(1000);
     const [startZeroBasedMonth, setStartZeroBasedMonth] = React.useState(currentZeroBasedMonth);

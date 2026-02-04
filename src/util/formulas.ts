@@ -15,6 +15,7 @@ export const getHistoricalCpi = (year:number, month:number = 0) => {
     const cpiData = JSON.parse(cpiDataString);
     const cpiYearDataArray = cpiData[year.toString()];
     const cpiMonthData = cpiYearDataArray[month.toString()];
+    console.log('getHistoricalCpi: ' + year + ', ' + month + ', ' + cpiMonthData);
     return cpiMonthData;
 }
 
@@ -49,14 +50,16 @@ export const calculateTimespanMonths = (startYear:number, startMonth:number, end
 export const getLatestMonthWithData = (currentMonth:number, year:number) => {
     let latestMonth = currentMonth;
     let latestYear = year;
+    let i = 0;
     while (getHistoricalCpi(latestYear,latestMonth) === null) {
+        console.log('while: ' + i);
         latestMonth -= 1;
         if (latestMonth < 0) {
             latestYear -= 1;
             latestMonth = 11;
         }
     }
-    return latestMonth;
+    return {latestMonth, latestYear};
 }
 
 export const getPresentCpi = () => {

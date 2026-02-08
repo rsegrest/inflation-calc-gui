@@ -49,6 +49,7 @@ const getYearArray = (currentYear: number) => {
 
 const StartingAmountForm = (props: {
     width: number,
+    deviceType: string,
     startingAmount: number,
     setStartingAmount: (amount: number) => void,
     startZeroBasedMonth: number,
@@ -67,6 +68,7 @@ const StartingAmountForm = (props: {
 }) => {
     const {
         width,
+        deviceType,
         startingAmount,
         setStartingAmount,
         startZeroBasedMonth,
@@ -85,13 +87,13 @@ const StartingAmountForm = (props: {
     } = props;
 
     const formCellStyle = {
-        display: 'block',
+        // display: 'block',
         width: '100%',
     }
 
     const setMonthName = React.useState('month')[1];
 
-    const deviceType = DeviceDetector();
+    // const deviceType = DeviceDetector();
     // console.log(`deviceType : ${deviceType}`)
 
     let inputStyle = defaultInputStyle;
@@ -102,7 +104,13 @@ const StartingAmountForm = (props: {
         console.log(`MOBILE -- width is : ${width}`)
         inputStyle = mobileInputStyle;
         dropdownStyle = mobileDropdownStyle;
+        formLabelStyle = {
+            ...defaultFormLabelStyle,
+            fontSize: '1.2rem',
+            width: '100%',
+        };
     }
+
     const amountFormControl = (
         <Form.Control
             style={{
@@ -223,31 +231,38 @@ const StartingAmountForm = (props: {
     )
     const enableEndDate = true;
     let dateColumnWidth = '100%';
+    let fullWidth = '60%';
     if (enableEndDate) {
-        dateColumnWidth = '49%';
+        dateColumnWidth = '45%';
     }
     return (
         <div
             style={{
-                border: '5px solid red',
+                border: '5px solid ' + COLORS.VERMILLION,
                 backgroundColor: COLORS.SUNNY,
                 borderRadius: '10px',
                 minWidth: '20rem',
-                width: '60%',
-                maxWidth: '80%',
-                margin: 'auto',
+                width: fullWidth,
+                maxWidth: '100%',
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                marginTop: '1rem',
+                marginBottom: '1rem',
                 padding: '1rem',
             }}
         >
-            <div style={{
-                // border: '1px solid blue',
-                margin: 'auto',
-                width: dateColumnWidth,
-            }}>
+            <div
+                className='form-outer-box'
+                style={{
+                    margin: 'auto',
+                    width: '100%',
+                }}>
                 <div
+                    className='form-inner-box starting-amount-box'
                     style={{
-                        width: '100%',
+                        // width: dateColumnWidth,
                         display: 'block',
+                        margin: 'auto',
                     }}
                 >
                     <FloatingLabel
@@ -260,11 +275,13 @@ const StartingAmountForm = (props: {
                         {amountFormControl}
                     </div>
                 </div>
-                <div style={{
-                    // border: '1px solid green',
-                    display: 'inline-block',
-                    width: '49%',
-                }}>
+                <div
+                    className='form-inner-box start-date-box'
+                    style={{
+                        display: 'inline-block',
+                        width: dateColumnWidth,
+                        marginRight: '1rem',
+                    }}>
                     <div
                         style={{
                             display: 'inline-block',
@@ -299,11 +316,13 @@ const StartingAmountForm = (props: {
                 </div>
                 {
                     enableEndDate && (
-                        <div style={{
-                            // border: '1px solid green',
-                            display: 'inline-block',
-                            width: dateColumnWidth,
-                        }}>
+                        <div
+                            className='form-inner-box end-date-box'
+                            style={{
+                                // border: '1px solid blue',
+                                display: 'inline-block',
+                                width: dateColumnWidth,
+                            }}>
                             <div
                                 style={{
                                     display: 'block',

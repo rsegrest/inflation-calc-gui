@@ -3,13 +3,11 @@ import DeviceDetector from '../../util/DeviceDetector';
 import { lightTextColorDefault, boxStyleDefault, largeTypeDefault, minorEmphasisDefault } from '../constants/style';
 
 const InflationRate = ({
-    // width,
     inflationRate,
     lostValue,
     startMonth,
     startYear,
 }: {
-    // width?: number,
     inflationRate: number,
     lostValue: number,
     startMonth: string,

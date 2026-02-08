@@ -36,7 +36,7 @@ export const defaultTableStyle: React.CSSProperties = {
     textAlign: 'center',
     margin: 'auto',
 };
-export const titleStyle = {
+export const defaultTitleStyle: React.CSSProperties = {
     fontSize: '5rem',
     marginTop: '10%',
     textAlign: 'center',
@@ -44,13 +44,13 @@ export const titleStyle = {
     border: 'none',
 }
 
-export const subTitleStyle = {
+export const subTitleStyle: React.CSSProperties = {
     textAlign: 'center',
     color: COLORS.SLATE,
     border: 'none',
 }
 
-export const latestDateStyle = {
+export const latestDateStyle: React.CSSProperties = {
     textAlign: 'center',
     color: COLORS.BLUE,
     // color: 'black',
@@ -60,7 +60,7 @@ export const latestDateStyle = {
 }
 
 export const defaultFormStyle: React.CSSProperties = {
-    display: 'block',
+    // display: 'block',
     color: COLORS.SLATE,
     backgroundColor: COLORS.WHITE,
     border: `2px solid ${COLORS.BLUE}`,
@@ -68,11 +68,11 @@ export const defaultFormStyle: React.CSSProperties = {
     textAlign: 'center',
     fontSize: '1.4rem',
     height: '3.5rem',
-    width: '10rem',
+    // width: '10rem',
 }
 export const defaultInputStyle: React.CSSProperties = {
     ...defaultFormStyle,
-    display: 'block',
+    // display: 'block',
     margin: 'auto',
     marginBottom: '2rem',
 }

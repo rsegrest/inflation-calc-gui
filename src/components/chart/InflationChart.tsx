@@ -32,6 +32,8 @@ const InflationChart = (props: {
             <div
                 style={{
                     backgroundColor: COLORS.SLATE,
+                    borderRadius: '1rem',
+                    padding: '1rem',
                 }}
             >
                 <LossChart

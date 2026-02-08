@@ -1,14 +1,20 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { titleStyle, subTitleStyle, latestDateStyle } from "./constants/style";
+import { defaultTitleStyle, subTitleStyle, latestDateStyle } from "./constants/style";
 import { getNameOfMonth } from '../util/formulas';
 
-const InflationHeader = ({ width, latestDateWithData }: { width: number, latestDateWithData: { month: number, year: number } }) => {
+const InflationHeader = ({ width, deviceType, latestDateWithData }: { width: number, deviceType: string, latestDateWithData: { month: number, year: number } }) => {
     let headerFontSize = '5rem';
     let subHeaderFontSize = '2.5rem';
-    if (width < 800) {
+    let titleStyle = defaultTitleStyle;
+    if (deviceType === 'Mobile') {
         headerFontSize = `${(Math.floor(width * .1))}px`;
         subHeaderFontSize = `${(Math.floor(width * .05))}px`;
+        titleStyle = {
+            ...defaultTitleStyle,
+            marginLeft: '0',
+            marginRight: '0',
+        }
     }
 
     return (

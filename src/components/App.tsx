@@ -37,10 +37,16 @@ import LostValue from './result/LostValue';
 import Button from 'react-bootstrap/esm/Button';
 import { defaultButtonStyle } from './constants/style';
 
-const calcCellDimensions = () => {
+const calcCellDimensions = (deviceType: string) => {
     const { innerWidth: width, innerHeight: height } = window;
+    let w = width;
+    if (deviceType === 'Mobile') {
+        w = width * .95;
+    } else {
+        w = width * .75;
+    }
     return {
-        width: width * .75,
+        width: w,
         height: height * .75
     };
 }
@@ -52,6 +58,8 @@ const App = () => {
     const latestDateWithData = getLatestDateWithData(nowDate.getMonth(), currentYear);
     currentYear = latestDateWithData.year;
     let currentZeroBasedMonth = latestDateWithData.month;
+
+    const [deviceType, setDeviceType] = React.useState(DeviceDetector());
 
     const [startingAmount, setStartingAmount] = React.useState(1000);
     const [startZeroBasedMonth, setStartZeroBasedMonth] = React.useState(currentZeroBasedMonth);
@@ -96,9 +104,14 @@ const App = () => {
         setTimePeriodInMonths(calculateTimespanMonths(startYear, startZeroBasedMonth, endYear, endZeroBasedMonth));
 
 
+        // const deviceType = DeviceDetector();
+        setDeviceType(DeviceDetector());
+        // console.log(`deviceType : ${deviceType}`)
+
     }, [startingAmount, startYear, startZeroBasedMonth, endYear, endZeroBasedMonth, historicalStartCpi, historicalEndCpi])
 
-    const { width } = calcCellDimensions();
+    let width = calcCellDimensions(deviceType).width;
+
     return (
         <div
             style={{
@@ -112,10 +125,12 @@ const App = () => {
                     <>
                         <InflationHeader
                             width={width}
+                            deviceType={deviceType}
                             latestDateWithData={latestDateWithData}
                         />
                         <StartingAmountForm
                             width={width}
+                            deviceType={deviceType}
                             startingAmount={startingAmount}
                             setStartingAmount={setStartingAmount}
                             startZeroBasedMonth={startZeroBasedMonth}

@@ -1,12 +1,13 @@
 #root {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
 }
 
 .App,
 .InputFigure {
   text-align: center;
   vertical-align: middle;
-  margin: auto;
 }
 
 .App-logo {

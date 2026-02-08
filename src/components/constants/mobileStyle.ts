@@ -10,21 +10,23 @@ export const mobileFormStyle = {
     fontSize: '.8rem',
     height: '2rem',
     border: '1px solid white',
-    width: '100%'
+    width: '100%',
+    margin: 'auto',
 }
 
 export const mobileInputStyle = {
     ...defaultInputStyle,
-    fontSize: '.8rem',
-    height: '2rem',
+    fontSize: '1.2rem',
+    height: '2.6rem',
     border: '1px solid white',
-    width: '100%'
+    width: '100%',
+    margin: 'auto',
 }
 
 export const mobileDropdownStyle = {
     ...defaultDropdownStyle,
-    fontSize: '.8rem',
-    height: '2rem',
+    fontSize: '1.2rem',
+    height: '2.6rem',
     border: '1px solid white',
     width: '100%'
 }

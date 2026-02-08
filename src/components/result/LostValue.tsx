@@ -16,11 +16,6 @@ let lostValueBox = {
     minWidth: '50%',
 };
 
-const smallType = {
-    color: COLORS.BRICK,
-    margin: '-.3rem',
-};
-
 const hotType = {
     fontSize: '1.2rem',
     color: COLORS.FLAME

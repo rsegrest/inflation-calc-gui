@@ -1,4 +1,3 @@
-import { COLORS } from '../constants/colors';
 import DeviceDetector from '../../util/DeviceDetector';
 import { lightTextColorDefault, boxStyleDefault, largeTypeDefault, minorEmphasisDefault } from '../constants/style';
 

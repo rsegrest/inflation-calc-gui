@@ -2,10 +2,10 @@ import * as React from 'react';
 // import Container from 'react-bootstrap/Container';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
+// import { COLORS } from './constants/colors';
 import InflationHeader from './InflationHeader';
 import StartingAmountForm from './entry/StartingAmountForm';
 import DeviceDetector from '../util/DeviceDetector';
-import { COLORS } from './constants/colors';
 
 import {
     getHistoricalCpi,

@@ -1,24 +1,9 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { titleStyle, subTitleStyle } from "./constants/style";
+import { titleStyle, subTitleStyle, latestDateStyle } from "./constants/style";
+import { getNameOfMonth } from '../util/formulas';
 
-// const titleStyle = {
-//     fontSize: '5rem',
-//     marginTop: '10%',
-//     textAlign: 'center',
-//     color: COLORS.FLAME,
-//     border: 'none',
-// }
-
-// const subTitleStyle = {
-//     textAlign: 'center',
-//     color: COLORS.SAFFRON,
-//     marginBottom: '5%',
-//     border: 'none',
-// }
-
-const InflationHeader = ({ width }: { width: number }) => {
-    console.log(`Inflation Header : ${width}`)
+const InflationHeader = ({ width, latestDateWithData }: { width: number, latestDateWithData: { month: number, year: number } }) => {
     let headerFontSize = '5rem';
     let subHeaderFontSize = '2.5rem';
     if (width < 800) {
@@ -27,11 +12,7 @@ const InflationHeader = ({ width }: { width: number }) => {
     }
 
     return (
-        <div
-            style={{
-                border: '1px solid blue',
-            }}
-        >
+        <div>
             <Row
                 className='mont-xbold'
                 style={{
@@ -48,11 +29,20 @@ const InflationHeader = ({ width }: { width: number }) => {
                 style={{
                     ...subTitleStyle,
                     fontSize: subHeaderFontSize,
-                    // width,
                 } as React.CSSProperties}
             >
                 <Col>
                     How inflation destroys
+                </Col>
+            </Row>
+            <Row
+                className='mont-semibold'
+                style={{
+                    ...latestDateStyle,
+                } as React.CSSProperties}
+            >
+                <Col>
+                    {`Latest CPI Data: ${getNameOfMonth(latestDateWithData.month)}, ${latestDateWithData.year}`}
                 </Col>
             </Row>
         </div>

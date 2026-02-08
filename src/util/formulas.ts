@@ -47,7 +47,10 @@ export const calculateTimespanMonths = (startYear:number, startMonth:number, end
     return totalMonths;
 }
 
-export const getLatestMonthWithData = (currentMonth:number, year:number) => {
+export const getLatestDateWithData = (currentMonth:number, year:number):{
+    month: number,
+    year: number
+} => {
     let latestMonth = currentMonth;
     let latestYear = year;
     let i = 0;
@@ -59,7 +62,7 @@ export const getLatestMonthWithData = (currentMonth:number, year:number) => {
             latestMonth = 11;
         }
     }
-    return {latestMonth, latestYear};
+    return {month: latestMonth, year: latestYear};
 }
 
 export const getPresentCpi = () => {

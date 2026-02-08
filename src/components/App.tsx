@@ -5,20 +5,23 @@ import * as React from 'react';
 import InflationHeader from './InflationHeader';
 import StartingAmountForm from './entry/StartingAmountForm';
 import DeviceDetector from '../util/DeviceDetector';
+import { COLORS } from './constants/colors';
+
 import {
     getHistoricalCpi,
     adjustFigureWithInflation,
     calculateInflationRate,
     calculateTimespanMonths,
     calculateLossPercentage,
-    getLatestMonthWithData,
+    getLatestDateWithData,
+    getNameOfMonth,
 } from '../util/formulas';
 import { getRequestToApi } from '../apiInterface/connect';
 
 // import InputHistoricalFigure from './entry/InputHistoricalFigure';
 import InflationChart from './chart/InflationChart';
 
-import ResultLayout from './result/ResultLayout';
+// import ResultLayout from './result/ResultLayout';
 import "@fontsource/montserrat/300.css";
 import "@fontsource/montserrat/500.css";
 import "@fontsource/montserrat/600.css";
@@ -28,6 +31,11 @@ import "@fontsource/montserrat/700-italic.css";
 import "@fontsource/montserrat/800.css";
 
 import './App.css';
+import SpendingPower from './result/SpendingPower';
+import InflationRate from './result/InflationRate';
+import LostValue from './result/LostValue';
+import Button from 'react-bootstrap/esm/Button';
+import { defaultButtonStyle } from './constants/style';
 
 const calcCellDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -36,56 +44,20 @@ const calcCellDimensions = () => {
         height: height * .75
     };
 }
-const getChart = ({
-    width,
-    startYear,
-    endYear,
-    startZeroBasedMonth,
-    endZeroBasedMonth,
-    startingAmount,
-    nowDollars,
-    lostValue,
-}: {
-    width: number,
-    startYear: number,
-    endYear: number,
-    startZeroBasedMonth: number,
-    endZeroBasedMonth: number,
-    startingAmount: number,
-    nowDollars: number,
-    lostValue: number,
-}) => {
-    const deviceType = DeviceDetector();
-    if (deviceType === 'Mobile') {
-        return null;
-    }
-    return (
-        <InflationChart
-            width={width}
-            startYear={startYear}
-            endYear={endYear}
-            startZeroBasedMonth={startZeroBasedMonth}
-            endZeroBasedMonth={endZeroBasedMonth}
-            startingAmount={startingAmount}
-            nowDollars={nowDollars}
-            lostValue={lostValue}
-        />
-    )
-}
 
 const App = () => {
 
     const nowDate = new Date();
     let currentYear = nowDate.getFullYear();
-    const lastestDataMonth = getLatestMonthWithData(nowDate.getMonth(), currentYear);
-    currentYear = lastestDataMonth.latestYear;
-    let currentZeroBasedMonth = lastestDataMonth.latestMonth;
+    const latestDateWithData = getLatestDateWithData(nowDate.getMonth(), currentYear);
+    currentYear = latestDateWithData.year;
+    let currentZeroBasedMonth = latestDateWithData.month;
 
     const [startingAmount, setStartingAmount] = React.useState(1000);
     const [startZeroBasedMonth, setStartZeroBasedMonth] = React.useState(currentZeroBasedMonth);
     const [startYear, setStartYear] = React.useState((currentYear - 10));
-    const [endZeroBasedMonth] = React.useState((currentZeroBasedMonth));
-    const [endYear] = React.useState(currentYear);
+    const [endZeroBasedMonth, setEndZeroBasedMonth] = React.useState((currentZeroBasedMonth));
+    const [endYear, setEndYear] = React.useState(currentYear);
 
     const [historicalStartCpi, setHistoricalStartCpi] = React.useState(getHistoricalCpi(startYear, startZeroBasedMonth));
     const [historicalEndCpi, setHistoricalEndCpi] = React.useState(getHistoricalCpi(endYear, currentZeroBasedMonth));
@@ -130,7 +102,6 @@ const App = () => {
     return (
         <div
             style={{
-                border: '1px solid red',
                 width,
                 textAlign: 'center',
                 margin: 'auto',
@@ -141,6 +112,7 @@ const App = () => {
                     <>
                         <InflationHeader
                             width={width}
+                            latestDateWithData={latestDateWithData}
                         />
                         <StartingAmountForm
                             width={width}
@@ -149,9 +121,11 @@ const App = () => {
                             startZeroBasedMonth={startZeroBasedMonth}
                             setStartZeroBasedMonth={setStartZeroBasedMonth}
                             endZeroBasedMonth={endZeroBasedMonth}
+                            setEndZeroBasedMonth={setEndZeroBasedMonth}
                             startYear={startYear}
                             setStartYear={setStartYear}
                             endYear={endYear}
+                            setEndYear={setEndYear}
                             setNowDollars={setNowDollars}
                             setThenDollars={setThenDollars}
                             setShowResult={setShowResult}
@@ -162,67 +136,62 @@ const App = () => {
                 ) : null
 
             }
-            {
-                showResult ? (
+            {showResult ? (
+                <>
                     <div
                         style={{
-                            border: '1px solid cyan',
-                            paddingTop: '1rem',
                             paddingBottom: '1rem',
-                            minHeight: '10rem',
-                            maxHeight: '100rem',
-                            // display: 'block',
-                            // height: '100rem',
-                            // width: '100%',
-                            // margin: 'auto',
                         }}
                     >
-                        <ResultLayout
-                            width={width}
+                        <Button
+                            style={defaultButtonStyle}
+                            onClick={() => {
+                                setShowForm(true);
+                                setShowResult(false);
+                            }}
+                        >New Calculation</Button>
+                    </div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'top',
+                            verticalAlign: 'top',
+                        }}
+                    >
+                        <SpendingPower
                             nowDollars={nowDollars}
                             thenDollars={thenDollars}
                             startZeroBasedMonth={startZeroBasedMonth}
                             startYear={startYear}
+                        />
+                        <InflationRate
                             inflationRate={inflationRate}
                             lostValue={lostValue}
+                            startMonth={getNameOfMonth(startZeroBasedMonth)}
+                            startYear={startYear}
+                        />
+                        <LostValue
+                            lostValue={lostValue}
                             timePeriodInMonths={timePeriodInMonths}
-                            setShowForm={setShowForm}
-                            setShowResult={setShowResult}
-                        // setNowDollars={setNowDollars}
-                        // setThenDollars={setThenDollars}
-                        // setStartZeroBasedMonth={setStartZeroBasedMonth}
-                        // setStartYear={setStartYear}
-                        // setInflationRate={setInflationRate}
-                        // setLostValue={setLostValue}
-                        // setTimePeriodInMonths={setTimePeriodInMonths}
                         />
                     </div>
-                ) : null
-            }
-            {
-                showResult ? (
-                    <div
-                        style={{
-                            border: '1px solid white',
-                            // display: 'block',
-                            width: '100%',
-                            // margin: 'auto',
-                            textAlign: 'center',
-                        }}
-                    >
-                        {getChart({
-                            width,
-                            startYear,
-                            endYear,
-                            startZeroBasedMonth,
-                            endZeroBasedMonth,
-                            startingAmount,
-                            nowDollars,
-                            lostValue,
-                        })}
-                    </div>
-                ) : (<div>NO RESULT</div>)
-            }
+                    <InflationChart
+                        width={width}
+                        nowDollars={nowDollars}
+                        thenDollars={thenDollars}
+                        startZeroBasedMonth={startZeroBasedMonth}
+                        startYear={startYear}
+                        lostValue={lostValue}
+                        timePeriodInMonths={timePeriodInMonths}
+                        endZeroBasedMonth={endZeroBasedMonth}
+                        endYear={endYear}
+                        startingAmount={startingAmount}
+                    />
+                </>
+            ) : (
+                null
+            )}
         </div>
     )
 }

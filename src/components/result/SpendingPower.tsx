@@ -1,6 +1,9 @@
 import { COLORS } from '../constants/colors';
 import { getNameOfMonth } from '../../util/formulas';
 import DeviceDetector from '../../util/DeviceDetector';
+import { boxStyleDefault, lightTextColorDefault } from '../constants/style';
+
+let boxStyle = boxStyleDefault;
 
 const SpendingPower = ({
     // width,
@@ -19,10 +22,8 @@ const SpendingPower = ({
 
     let boxWidth = '29%';
     let fontSize = 2.4;
-    // let boxFloat = 'right';
     let marginTop = '0';
     let divStyle = {
-        // float: boxFloat,
         float: 'left',
         background: '#F4C430', // saffron
         border: '5px solid black',
@@ -38,22 +39,16 @@ const SpendingPower = ({
         fontSize = 1.2;
         divStyle = {
             ...divStyle,
-            // width: '14rem',
-            // float: 'center',
             marginTop: '1rem',
-            // marginLeft: 'auto',
-            // marginRight: 'auto',
         }
     }
     return (
         <div
-            style={divStyle as React.CSSProperties}
+            style={boxStyle as React.CSSProperties}
         >
             <div
                 className='mont-medium'
-                style={{
-                    color: COLORS.BRICK
-                }}
+                style={lightTextColorDefault}
             >
                 It would now take
             </div>
@@ -68,9 +63,7 @@ const SpendingPower = ({
             </div>
             <div
                 className='mont-medium'
-                style={{
-                    color: COLORS.BRICK
-                }}
+                style={lightTextColorDefault}
             >
                 dollars today<br />
                 to buy as much as
@@ -86,9 +79,7 @@ const SpendingPower = ({
             </div>
             <div
                 className='mont-medium'
-                style={{
-                    color: COLORS.BRICK
-                }}
+                style={lightTextColorDefault}
             >
                 would buy in
             </div>

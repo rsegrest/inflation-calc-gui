@@ -128,9 +128,8 @@ export const getData = (labels: string[], cpiData: number[]) => {
       {
         label: 'Dollar Value',
         data: cpiData,
-        borderColor: 'rgb(0,255, 0)',
-        // fillColor: 'rgb(0,255,0, 128)',
-        backgroundColor: 'rgba(32, 255, 32, 1)',
+        borderColor: 'rgb(255,0, 0)',
+        backgroundColor: 'rgba(255, 0, 0, 1)',
       },
     ],
   }
@@ -138,13 +137,13 @@ export const getData = (labels: string[], cpiData: number[]) => {
 
 const LossChart = ({
   startYear,
-  endYear,
   startZeroBasedMonth,
+  endYear,
   endZeroBasedMonth,
 }: {
   startYear: number,
-  endYear: number,
   startZeroBasedMonth: number,
+  endYear: number,
   endZeroBasedMonth: number,
 }) => {
   const labelArray = generateLabelArray(

@@ -1,28 +1,6 @@
 import { COLORS } from '../constants/colors';
 import DeviceDetector from '../../util/DeviceDetector';
-
-let boxStyle: React.CSSProperties = {
-    background: COLORS.SAFFRON, // saffron
-    // border: '1px solid red',
-    float: 'left',
-    border: '5px solid black',
-    borderRadius: '18px',
-    width: '29%',
-    textAlign: 'center',
-    padding: '.6rem',
-    marginLeft: '0.5rem',
-    marginRight: '0.5rem',
-}
-
-let largeType: React.CSSProperties = {
-    color: COLORS.FLAME,
-    fontSize: '3rem',
-}
-
-let minorEmphasis: React.CSSProperties = {
-    color: COLORS.FLAME,
-    fontSize: '1.2rem'
-}
+import { lightTextColorDefault, boxStyleDefault, largeTypeDefault, minorEmphasisDefault } from '../constants/style';
 
 const InflationRate = ({
     // width,
@@ -38,6 +16,9 @@ const InflationRate = ({
     startYear: number,
 }) => {
     const deviceType = DeviceDetector();
+    let boxStyle = boxStyleDefault;
+    let largeType = largeTypeDefault;
+    let minorEmphasis = minorEmphasisDefault;
     // let boxWidth = '20rem';
     // let fontSize = 2.4;
     // let boxFloat = 'right';
@@ -47,7 +28,6 @@ const InflationRate = ({
         // boxFloat = 'center';
         boxStyle = {
             ...boxStyle,
-            // width: '33%',
             marginTop: '1rem',
             marginBottom: '1rem',
         }
@@ -60,9 +40,7 @@ const InflationRate = ({
         <div style={boxStyle}>
             <div
                 className='mont-medium'
-                style={{
-                    color: COLORS.BRICK,
-                }}
+                style={lightTextColorDefault}
             >
                 Total Inflation Rate
             </div>
@@ -74,9 +52,7 @@ const InflationRate = ({
             </div>
             <div
                 className='mont-medium'
-                style={{
-                    color: COLORS.BRICK,
-                }}
+                style={lightTextColorDefault}
             >
                 <span
                     className='mont-bold'
@@ -91,9 +67,7 @@ const InflationRate = ({
             </div>
             <div
                 className='mont-medium'
-                style={{
-                    color: COLORS.BRICK,
-                }}
+                style={lightTextColorDefault}
             >
                 did in <span
                     className='mont-bold'

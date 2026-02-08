@@ -1,24 +1,14 @@
 import { COLORS } from '../constants/colors';
 import DeviceDetector from '../../util/DeviceDetector';
+import { boxStyleDefault, lightTextColorDefault } from '../constants/style';
 
-let boxStyle: React.CSSProperties = {
-    background: COLORS.SAFFRON,
-    border: '5px solid black',
-    borderRadius: '18px',
-    float: 'left',
-    width: '29%',
-    textAlign: 'center',
-    marginLeft: '0.5rem',
-    marginRight: '0.5rem',
-    verticalAlign: 'middle',
-    padding: '.6rem',
-};
+let boxStyle = boxStyleDefault;
 
 let lostValueBox = {
-    backgroundColor: COLORS.FLAME,
+    backgroundColor: COLORS.VERMILLION,
     color: COLORS.SUNNY,
     fontSize: '3rem',
-    border: 'solid #FF5733 2px',
+    border: `solid ${COLORS.SUNNY} 2px`,
     borderRadius: '0.3rem',
     paddingLeft: '0.2rem',
     paddingRight: '0.2rem',
@@ -70,7 +60,7 @@ const LostValue = ({
             <div
                 className='mont-medium'
                 style={{
-                    ...smallType,
+                    ...lightTextColorDefault,
                     padding: 0,
                 }}
             >
@@ -83,7 +73,7 @@ const LostValue = ({
                 $$$
             </div>
             <div
-                style={smallType}
+                style={lightTextColorDefault}
             >
                 have
             </div>
@@ -100,7 +90,7 @@ const LostValue = ({
                 {lostValue}%
             </div>
             <div
-                style={smallType}
+                style={lightTextColorDefault}
             >
                 of their value in
             </div>

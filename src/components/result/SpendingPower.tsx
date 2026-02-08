@@ -1,4 +1,4 @@
-import { COLORS } from '../../constants';
+import { COLORS } from '../constants/colors';
 import { getNameOfMonth } from '../../util/formulas';
 import DeviceDetector from '../../util/DeviceDetector';
 

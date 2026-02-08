@@ -1,4 +1,4 @@
-import { COLORS } from '../../constants';
+import { COLORS } from '../constants/colors';
 import DeviceDetector from '../../util/DeviceDetector';
 
 let boxStyle: React.CSSProperties = {

@@ -13,6 +13,7 @@ import {
     calculateLossPercentage,
     getLatestMonthWithData,
 } from '../util/formulas';
+import { getRequestToApi } from '../apiInterface/connect';
 
 // import InputHistoricalFigure from './entry/InputHistoricalFigure';
 import InflationChart from './chart/InflationChart';
@@ -71,11 +72,32 @@ const getChart = ({
         />
     )
 }
+// Move out
+// const callApi = async (
+//     {
+//         startingAmount,
+//         fromYear,
+//         toYear,
+//         fromMonth,
+//         toMonth,
+//     }: {
+//         startingAmount: number,
+//         fromYear: number,
+//         toYear: number,
+//         fromMonth: number,
+//         toMonth: number,
+//     }
+// ) => {
+//     const apiResponse: any = await getRequestToApi({ startingAmount, fromYear, toYear, fromMonth, toMonth });
+//     console.log(apiResponse.data)
+//     return apiResponse;
+// }
+// callApi();
+
 const App = () => {
 
     const nowDate = new Date();
     let currentYear = nowDate.getFullYear();
-    // let { currentYear: latestYear, currentZeroBasedMonth: latestMonth } = getLatestMonthWithData(nowDate.getMonth(), currentYear);
     const lastestDataMonth = getLatestMonthWithData(nowDate.getMonth(), currentYear);
     currentYear = lastestDataMonth.latestYear;
     let currentZeroBasedMonth = lastestDataMonth.latestMonth;
@@ -129,6 +151,7 @@ const App = () => {
     return (
         <Container
             style={{
+                border: '1px solid red',
                 width,
                 textAlign: 'center',
             }}
@@ -153,6 +176,7 @@ const App = () => {
                             setThenDollars={setThenDollars}
                             setShowResult={setShowResult}
                             setShowForm={setShowForm}
+                            getRequestToApi={getRequestToApi}
                         />
                     </>
                 ) : null

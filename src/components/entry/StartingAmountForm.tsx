@@ -1,81 +1,45 @@
 import * as React from 'react';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import DeviceDetector from '../../util/DeviceDetector';
 import { getNameOfMonth } from '../../util/formulas';
-import { COLORS } from '../../constants';
+// import COLORS from '../constants/colors';
 import {
     getHistoricalCpi,
     adjustFigureWithInflation,
 } from '../../util/formulas';
-
-let tableStyle: React.CSSProperties = {
-    border: 'none',
-    textAlign: 'center',
-    margin: 'auto',
-};
-
-let formStyle: React.CSSProperties = {
-    display: 'inline',
-    color: COLORS.FLAME,
-    backgroundColor: COLORS.SUNNY,
-    border: `2px solid ${COLORS.BRICK}`,
-    textAlign: 'center',
-    fontSize: '2.4rem',
-    height: '5.5rem',
-}
-let monthFormStyle: React.CSSProperties = {
-    ...formStyle,
-    float: 'left',
-    // width: '14rem',
-    width: '100%',
-}
-let yearFormStyle: React.CSSProperties = {
-    ...formStyle,
-    float: 'left',
-    // width: '10rem',
-    width: '80%',
-}
-let amountEntryStyle: React.CSSProperties = {
-    border: 'none',
-    paddingLeft: '0.5rem',
-    paddingRight: '1rem',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
-};
-
-let monthEntryStyle: React.CSSProperties = {
-    border: 'none',
-    paddingLeft: '0.5rem',
-    paddingRight: '1rem',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
-}
-
-let yearEntryStyle: React.CSSProperties = {
-    border: 'none',
-    paddingLeft: '0.5rem',
-    paddingTop: '0.5rem',
-    paddingBottom: '0.5rem',
-    paddingRight: '1rem',
-}
-
-let formLabelStyle: React.CSSProperties = {
-    color: 'white',
-    fontSize: '.7rem'
-}
-
-let buttonStyle: React.CSSProperties = {
-    fontFamily: 'Montserrat',
-    fontWeight: 'bold',
-    backgroundColor: COLORS.SAFFRON,
-    color: COLORS.FLAME,
-    border: `2px solid ${COLORS.BRICK}`,
-    width: '6rem',
-}
+import type ReturnData from '../../dataInterface/ReturnData.interface';
+import {
+    defaultInputStyle,
+    defaultDropdownStyle,
+    mobileInputStyle,
+    mobileDropdownStyle,
+    defaultFormLabelStyle,
+    mobileFormLabelStyle,
+    defaultButtonStyle,
+    mobileButtonStyle,
+    // defaultFormStyle,
+    // mobileFormStyle,
+    // defaultMonthFormStyle,
+    // mobileMonthFormStyle,
+    // defaultYearFormStyle,
+    // mobileYearFormStyle,
+    // defaultAmountEntryStyle,
+    // mobileAmountEntryStyle,
+    // defaultMonthEntryStyle,
+    // mobileMonthEntryStyle,
+    // defaultYearEntryStyle,
+    // mobileYearEntryStyle,
+    // defaultFormLabelStyle,
+    // mobileFormLabelStyle,
+    // defaultButtonStyle,
+    // mobileButtonStyle,
+    // defaultTableStyle,
+    // mobileTableStyle,
+} from '../constants/style';
 
 const stripSpecialCharacters = (str: any) => {
     if (str === null || str === undefined) return '';
@@ -116,8 +80,9 @@ const StartingAmountForm = ({
     endZeroBasedMonth,
     setNowDollars,
     setThenDollars,
-    setShowResult,
+    // setShowResult,
     setShowForm,
+    getRequestToApi,
 }: {
     width: number,
     startingAmount: number,
@@ -132,55 +97,43 @@ const StartingAmountForm = ({
     setThenDollars: (dollars: number) => void,
     setShowResult: (show: boolean) => void,
     setShowForm: (show: boolean) => void,
+    getRequestToApi: (data: { startingAmount: number, fromYear: number, toYear: number, fromMonth: number, toMonth: number }) => Promise<{ data: ReturnData }>,
 }) => {
     const setMonthName = React.useState('month')[1];
 
     const deviceType = DeviceDetector();
     // console.log(`deviceType : ${deviceType}`)
 
+    // let formStyle = defaultFormStyle;
+    let inputStyle = defaultInputStyle;
+    let dropdownStyle = defaultDropdownStyle;
+    // let monthFormStyle = defaultMonthFormStyle;
+    // let yearFormStyle = defaultYearFormStyle;
+    let formLabelStyle = defaultFormLabelStyle;
+    // let buttonStyle = defaultButtonStyle;
+    // let amountEntryStyle = defaultAmountEntryStyle;
+    // let monthEntryStyle = defaultMonthEntryStyle;
+    // let yearEntryStyle = defaultYearEntryStyle;
+    // let tableStyle = defaultTableStyle;
+
     if (deviceType === 'Mobile') {
         console.log(`MOBILE -- width is : ${width}`)
-        amountEntryStyle = {
-            ...amountEntryStyle,
-        }
-
-        monthEntryStyle = {
-            ...monthEntryStyle,
-        }
-
-        yearEntryStyle = {
-            ...yearEntryStyle,
-            width: '100%',
-        }
-
-        formStyle = {
-            ...formStyle,
-            fontSize: '.8rem',
-            height: '2rem',
-            border: '1px solid white',
-            width: '100%'
-        }
-
-        monthFormStyle = {
-            ...monthFormStyle,
-            fontSize: '.8rem',
-            height: '2rem',
-            border: '1px solid white',
-            width: '100%'
-        }
-
-        yearFormStyle = {
-            ...yearFormStyle,
-            fontSize: '.8rem',
-            height: '2rem',
-            border: '1px solid white',
-            width: '100%'
-        }
+        // formStyle = mobileFormStyle;
+        inputStyle = mobileInputStyle;
+        dropdownStyle = mobileDropdownStyle;
+        // monthFormStyle = mobileMonthFormStyle;
+        // yearFormStyle = mobileYearFormStyle;
+        // formLabelStyle = mobileFormLabelStyle;
+        // buttonStyle = mobileButtonStyle;
+        // amountEntryStyle = mobileAmountEntryStyle;
+        // monthEntryStyle = mobileMonthEntryStyle;
+        // yearEntryStyle = mobileYearEntryStyle;
+        // tableStyle = mobileTableStyle;
     }
     const amountFormControl = (
         <Form.Control
             style={{
-                ...formStyle,
+                ...inputStyle,
             } as React.CSSProperties}
             className='mont-xbold'
             type="text"
@@ -220,7 +173,7 @@ const StartingAmountForm = ({
                     const nameOfMonth = getNameOfMonth(parseInt(e.target.value, 10));
                     setMonthName(nameOfMonth);
                 }}
-            style={monthFormStyle}
+            style={dropdownStyle}
         >
             <option value='0'>January</option>
             <option value='1'>February</option>
@@ -245,9 +198,7 @@ const StartingAmountForm = ({
                 (e) => {
                     setStartYear(parseInt(e.target.value, 10));
                 }}
-            style={{
-                ...yearFormStyle,
-            }}
+            style={dropdownStyle}
         >
             {getYearArray(endYear).map((yr) => (
                 <option value={yr} key={`year_${yr}`}>{yr}</option>
@@ -255,131 +206,91 @@ const StartingAmountForm = ({
         </Form.Select>
     )
     return (
-        <>
-            <Row
-                style={tableStyle}
-            >
-                {(deviceType === 'Mobile') ? null : (
-                    <Col
-                        colSpan={1}
-                    >
-                        &nbsp;
-                    </Col>
-                )
-                }
-                <Col
-                    style={{
-                        ...amountEntryStyle,
-                    }}
-                    colSpan={3}
-                >
-                    {
-                        (deviceType === "Mobile") ? (
-                            <>
-                                <Form.Label
-                                    style={formLabelStyle}
-                                >Starting Amount</Form.Label>
-                                {amountFormControl}
-                            </>
-                        ) : (
+        <div
+            style={{
+                width: '70%',
+                margin: 'auto',
+                border: '1px solid gold',
+            }}
+        >
+            <div style={{
+                width: '49%',
+                float: 'left',
+                border: '1px solid blue',
+            }}>
+                {
+                    (deviceType === "Mobile") ? (
+                        <>
+                            <Form.Label
+                                style={formLabelStyle}
+                            >Starting Amount</Form.Label>
+                            <Form.Label
+                                style={formLabelStyle}
+                            >Start Month</Form.Label>
+                            <Form.Label
+                                style={formLabelStyle}
+                            >Start Year</Form.Label>
+                        </>
+                    ) : (
+                        <>
                             <FloatingLabel
                                 className='mont-semibold'
-                                style={{
-                                    color: COLORS.BRICK,
-                                }}
+                                style={formLabelStyle}
                                 label="Starting Amount:"
-                            >
-                                {amountFormControl}
-                            </FloatingLabel>
-                        )
-                    }
-                </Col>
-                <Col
-                    style={{
-                        ...monthEntryStyle,
-                    }}
-                    colSpan={1}
-                >
-                    {
-                        (deviceType === "Mobile") ? (
-                            <>
-                                <Form.Label
-                                    style={formLabelStyle}
-                                >Start Month:</Form.Label>
-                                {selectMonthForm}
-                            </>
-                        ) : (
+                            />
                             <FloatingLabel
                                 className='mont-semibold'
-                                style={{
-                                    color: COLORS.BRICK,
-                                }}
-                                label="StartMonth:"
-                            >
-                                {selectMonthForm}
-                            </FloatingLabel>
-                        )
-                    }
-                </Col>
-                <Col
-                    className='yearEntry'
-                    style={yearEntryStyle}
-                    colSpan={2}
-                >
-                    {
-                        (deviceType === "Mobile") ? (
-                            <>
-                                <Form.Label
-                                    style={formLabelStyle}
-                                >
-                                    Start Year:
-                                </Form.Label>
-                                {selectYearForm}
-                            </>
-                        ) : (
+                                style={formLabelStyle}
+                                label="Start Month:"
+                            />
                             <FloatingLabel
                                 className='mont-semibold'
-                                style={{
-                                    color: COLORS.BRICK,
-                                }}
+                                style={formLabelStyle}
                                 label="Start Year:"
-                            >
-                                {selectYearForm}
-                            </FloatingLabel>
-                        )
-                    }
-                </Col>
-                {(deviceType === 'Mobile') ? null : (
-                    <Col
-                        colSpan={1}
-                    >
-                        &nbsp;
-                    </Col>
-                )
+                            />
+                        </>
+                    )
                 }
-            </Row>
-            <Row>
-                <Col>
-                    &nbsp;
-                </Col>
-                <Col>
-                    &nbsp;
-                </Col>
-                <Col
-                    style={{
-                        paddingRight: '1.3rem',
-                    }}
-                >
-                    <Button
-                        style={buttonStyle}
-                        onClick={() => {
-                            setShowResult(true);
-                            setShowForm(false);
-                        }}
-                    >SUBMIT</Button>
-                </Col>
-            </Row>
-        </>
+            </div>
+            <div style={{
+                width: '49%',
+                float: 'left',
+                border: '1px solid green',
+            }}>
+                {
+                    (deviceType === "Mobile") ? (
+                        amountFormControl
+                    ) : (
+                        <>
+                            <div style={inputStyle}>
+                                {amountFormControl}
+                            </div>
+                            <div style={dropdownStyle}>
+                                {selectMonthForm}
+                            </div>
+                            <div style={dropdownStyle}>
+                                {selectYearForm}
+                            </div>
+                        </>
+                    )
+                }
+            </div>
+            <Button
+                style={defaultButtonStyle}
+                onClick={async () => {
+                    const response = await getRequestToApi({
+                        startingAmount,
+                        fromYear: startYear,
+                        toYear: endYear,
+                        fromMonth: startZeroBasedMonth,
+                        toMonth: endZeroBasedMonth,
+                    });
+                    console.log('rx response:')
+                    console.log(response.data);
+                    setShowForm(false);
+                }}
+            >SUBMIT</Button>
+        </div>
 
     )
 }

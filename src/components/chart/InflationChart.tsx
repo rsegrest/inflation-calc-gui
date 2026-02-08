@@ -2,7 +2,7 @@ import LossChart from './LossChart.tsx';
 import Row from 'react-bootstrap/Row';
 // import DeviceDetector from '../../util/DeviceDetector';
 
-import { COLORS } from '../../constants.ts';
+import { COLORS } from '../constants/colors.ts';
 const InflationChart = ({
     width,
     startYear,

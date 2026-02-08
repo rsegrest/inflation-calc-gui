@@ -1,21 +1,21 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { COLORS } from "../constants";
+import { titleStyle, subTitleStyle } from "./constants/style";
 
-const titleStyle = {
-    fontSize: '5rem',
-    marginTop: '10%',
-    textAlign: 'center',
-    color: COLORS.FLAME,
-    border: 'none',
-}
+// const titleStyle = {
+//     fontSize: '5rem',
+//     marginTop: '10%',
+//     textAlign: 'center',
+//     color: COLORS.FLAME,
+//     border: 'none',
+// }
 
-const subTitleStyle = {
-    textAlign: 'center',
-    color: COLORS.SAFFRON,
-    marginBottom: '5%',
-    border: 'none',
-}
+// const subTitleStyle = {
+//     textAlign: 'center',
+//     color: COLORS.SAFFRON,
+//     marginBottom: '5%',
+//     border: 'none',
+// }
 
 const InflationHeader = ({ width }: { width: number }) => {
     console.log(`Inflation Header : ${width}`)
@@ -27,7 +27,11 @@ const InflationHeader = ({ width }: { width: number }) => {
     }
 
     return (
-        <>
+        <div
+            style={{
+                border: '1px solid blue',
+            }}
+        >
             <Row
                 className='mont-xbold'
                 style={{
@@ -51,7 +55,7 @@ const InflationHeader = ({ width }: { width: number }) => {
                     How inflation destroys
                 </Col>
             </Row>
-        </>
+        </div>
     )
 }
 

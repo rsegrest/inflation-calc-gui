@@ -1,16 +1,17 @@
 import { COLORS } from '../constants/colors';
 import DeviceDetector from '../../util/DeviceDetector';
 
-let boxStyle = {
+let boxStyle: React.CSSProperties = {
     background: COLORS.SAFFRON,
     border: '5px solid black',
     borderRadius: '18px',
-    width: '15rem',
+    float: 'left',
+    width: '29%',
     textAlign: 'center',
-    marginLeft: '0',
-    marginRight: 'auto',
+    marginLeft: '0.5rem',
+    marginRight: '0.5rem',
     verticalAlign: 'middle',
-    padding: '1.4rem',
+    padding: '.6rem',
 };
 
 let lostValueBox = {
@@ -43,9 +44,13 @@ const lostType = {
 };
 
 const LostValue = ({
-    width,
+    // width,
     lostValue,
     timePeriodInMonths
+}: {
+    // width: number,
+    lostValue: number,
+    timePeriodInMonths: number,
 }) => {
 
     const deviceType = DeviceDetector();
@@ -57,7 +62,7 @@ const LostValue = ({
             ...boxStyle,
             width: '14rem',
             marginLeft: 'auto',
-            marginTop: '0',
+            // marginTop: '0',
         }
     }
     return (

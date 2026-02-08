@@ -1,12 +1,9 @@
 import * as React from 'react';
 import Button from 'react-bootstrap/Button';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import DeviceDetector from '../../util/DeviceDetector';
 import { getNameOfMonth } from '../../util/formulas';
-// import COLORS from '../constants/colors';
 import {
     getHistoricalCpi,
     adjustFigureWithInflation,
@@ -15,31 +12,13 @@ import type ReturnData from '../../dataInterface/ReturnData.interface';
 import {
     defaultInputStyle,
     defaultDropdownStyle,
+    defaultFormLabelStyle,
+    defaultButtonStyle,
+} from '../constants/style';
+import {
     mobileInputStyle,
     mobileDropdownStyle,
-    defaultFormLabelStyle,
-    mobileFormLabelStyle,
-    defaultButtonStyle,
-    mobileButtonStyle,
-    // defaultFormStyle,
-    // mobileFormStyle,
-    // defaultMonthFormStyle,
-    // mobileMonthFormStyle,
-    // defaultYearFormStyle,
-    // mobileYearFormStyle,
-    // defaultAmountEntryStyle,
-    // mobileAmountEntryStyle,
-    // defaultMonthEntryStyle,
-    // mobileMonthEntryStyle,
-    // defaultYearEntryStyle,
-    // mobileYearEntryStyle,
-    // defaultFormLabelStyle,
-    // mobileFormLabelStyle,
-    // defaultButtonStyle,
-    // mobileButtonStyle,
-    // defaultTableStyle,
-    // mobileTableStyle,
-} from '../constants/style';
+} from '../constants/mobileStyle';
 
 const stripSpecialCharacters = (str: any) => {
     if (str === null || str === undefined) return '';
@@ -58,7 +37,6 @@ const restoreSpecialCharacters = (str: any) => {
         return str;
     }
 }
-
 
 const getYearArray = (currentYear: number) => {
     const yearArray = [];
@@ -80,9 +58,9 @@ const StartingAmountForm = ({
     endZeroBasedMonth,
     setNowDollars,
     setThenDollars,
-    // setShowResult,
     setShowForm,
     getRequestToApi,
+    setShowResult,
 }: {
     width: number,
     startingAmount: number,
@@ -99,17 +77,24 @@ const StartingAmountForm = ({
     setShowForm: (show: boolean) => void,
     getRequestToApi: (data: { startingAmount: number, fromYear: number, toYear: number, fromMonth: number, toMonth: number }) => Promise<{ data: ReturnData }>,
 }) => {
+
+    const formCellStyle = {
+        border: '1px solid yellow',
+        display: 'block',
+        width: '100%',
+    }
+
     const setMonthName = React.useState('month')[1];
 
     const deviceType = DeviceDetector();
     // console.log(`deviceType : ${deviceType}`)
 
-    // let formStyle = defaultFormStyle;
     let inputStyle = defaultInputStyle;
     let dropdownStyle = defaultDropdownStyle;
+    let formLabelStyle = defaultFormLabelStyle;
+    // let formStyle = defaultFormStyle;
     // let monthFormStyle = defaultMonthFormStyle;
     // let yearFormStyle = defaultYearFormStyle;
-    let formLabelStyle = defaultFormLabelStyle;
     // let buttonStyle = defaultButtonStyle;
     // let amountEntryStyle = defaultAmountEntryStyle;
     // let monthEntryStyle = defaultMonthEntryStyle;
@@ -118,9 +103,9 @@ const StartingAmountForm = ({
 
     if (deviceType === 'Mobile') {
         console.log(`MOBILE -- width is : ${width}`)
-        // formStyle = mobileFormStyle;
         inputStyle = mobileInputStyle;
         dropdownStyle = mobileDropdownStyle;
+        // formStyle = mobileFormStyle;
         // monthFormStyle = mobileMonthFormStyle;
         // yearFormStyle = mobileYearFormStyle;
         // formLabelStyle = mobileFormLabelStyle;
@@ -165,6 +150,9 @@ const StartingAmountForm = ({
     const selectMonthForm = (
         <Form.Select
             className='mont-xbold'
+            // style={{
+            //     ...inputStyle,
+            // } as React.CSSProperties}
             id="startMonthInput"
             value={startZeroBasedMonth}
             onChange={
@@ -214,84 +202,96 @@ const StartingAmountForm = ({
             }}
         >
             <div style={{
-                width: '49%',
-                float: 'left',
-                border: '1px solid blue',
+                // width: '100%',
+                margin: 'auto',
+                border: '1px solid lime',
+                // textAlign: 'center',
             }}>
-                {
-                    (deviceType === "Mobile") ? (
-                        <>
-                            <Form.Label
-                                style={formLabelStyle}
-                            >Starting Amount</Form.Label>
-                            <Form.Label
-                                style={formLabelStyle}
-                            >Start Month</Form.Label>
-                            <Form.Label
-                                style={formLabelStyle}
-                            >Start Year</Form.Label>
-                        </>
-                    ) : (
-                        <>
-                            <FloatingLabel
-                                className='mont-semibold'
-                                style={formLabelStyle}
-                                label="Starting Amount:"
-                            />
-                            <FloatingLabel
-                                className='mont-semibold'
-                                style={formLabelStyle}
-                                label="Start Month:"
-                            />
-                            <FloatingLabel
-                                className='mont-semibold'
-                                style={formLabelStyle}
-                                label="Start Year:"
-                            />
-                        </>
-                    )
-                }
+                {/* { */}
+                {/* // (deviceType === "Mobile") ? ( */}
+                {/* //     amountFormControl */}
+                {/* // ) : ( */}
+                <>
+                    <div
+                        style={{
+                            width: '100%',
+                            display: 'block',
+                        }}
+                    >
+                        <FloatingLabel
+                            className='mont-semibold'
+                            style={{
+                                ...formLabelStyle,
+                                border: '1px solid red',
+                                display: 'block',
+                                width: '100%',
+                            }}
+                            label="Starting Amount:"
+                        >
+                        </FloatingLabel>
+                        <div style={formCellStyle}>
+                            {amountFormControl}
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            border: '1px solid red',
+                            display: 'block',
+                            width: '100%',
+                        }}
+                    >
+                        <FloatingLabel
+                            className='mont-semibold'
+                            style={{
+                                ...formLabelStyle,
+                                border: '1px solid red',
+                                display: 'block',
+                                width: '100%',
+                            }}
+                            label="Start Month:"
+                        >
+                        </FloatingLabel>
+                        <div style={formCellStyle}>
+                            {selectMonthForm}
+                        </div>
+                    </div>
+                    <div
+                        style={{
+                            width: '100%',
+                            display: 'block',
+                        }}
+                    >
+                        <FloatingLabel
+                            className='mont-semibold'
+                            style={formLabelStyle}
+                            label="Start Year:"
+                        >
+                        </FloatingLabel>
+                        <div style={formCellStyle}>
+                            {selectYearForm}
+                        </div>
+                    </div>
+                </>
+                {/* // ) */}
+                {/* // } */}
+                <Button
+                    style={defaultButtonStyle}
+                    onClick={async () => {
+                        const response = await getRequestToApi({
+                            startingAmount,
+                            fromYear: startYear,
+                            toYear: endYear,
+                            fromMonth: startZeroBasedMonth,
+                            toMonth: endZeroBasedMonth,
+                        });
+                        console.log('rx response:')
+                        console.log(response.data);
+                        setShowForm(false);
+                        setShowResult(true);
+                    }}
+                >SUBMIT</Button>
             </div>
-            <div style={{
-                width: '49%',
-                float: 'left',
-                border: '1px solid green',
-            }}>
-                {
-                    (deviceType === "Mobile") ? (
-                        amountFormControl
-                    ) : (
-                        <>
-                            <div style={inputStyle}>
-                                {amountFormControl}
-                            </div>
-                            <div style={dropdownStyle}>
-                                {selectMonthForm}
-                            </div>
-                            <div style={dropdownStyle}>
-                                {selectYearForm}
-                            </div>
-                        </>
-                    )
-                }
-            </div>
-            <Button
-                style={defaultButtonStyle}
-                onClick={async () => {
-                    const response = await getRequestToApi({
-                        startingAmount,
-                        fromYear: startYear,
-                        toYear: endYear,
-                        fromMonth: startZeroBasedMonth,
-                        toMonth: endZeroBasedMonth,
-                    });
-                    console.log('rx response:')
-                    console.log(response.data);
-                    setShowForm(false);
-                }}
-            >SUBMIT</Button>
         </div>
-
     )
 }
 

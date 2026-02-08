@@ -3,13 +3,15 @@ import DeviceDetector from '../../util/DeviceDetector';
 
 let boxStyle: React.CSSProperties = {
     background: COLORS.SAFFRON, // saffron
+    // border: '1px solid red',
+    float: 'left',
     border: '5px solid black',
     borderRadius: '18px',
-    width: '15rem',
+    width: '29%',
     textAlign: 'center',
-    padding: '1.2rem',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    padding: '.6rem',
+    marginLeft: '0.5rem',
+    marginRight: '0.5rem',
 }
 
 let largeType: React.CSSProperties = {
@@ -45,7 +47,7 @@ const InflationRate = ({
         // boxFloat = 'center';
         boxStyle = {
             ...boxStyle,
-            width: '14rem',
+            // width: '33%',
             marginTop: '1rem',
             marginBottom: '1rem',
         }

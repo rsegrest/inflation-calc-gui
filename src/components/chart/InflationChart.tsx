@@ -1,5 +1,5 @@
 import LossChart from './LossChart.tsx';
-import Row from 'react-bootstrap/Row';
+// import Row from 'react-bootstrap/Row';
 // import DeviceDetector from '../../util/DeviceDetector';
 
 import { COLORS } from '../constants/colors.ts';
@@ -31,41 +31,45 @@ const InflationChart = ({
         height = '20rem';
     }
     return (
-        <Row
+        <div
+            className='mont-xbold chart-header'
             style={{
-                textAlign: 'center',
-                width: '100%',
+                border: '1px solid pink',
+                color: COLORS.SAFFRON,
+                margin: 'auto',
+                height: '100%',
+                display: 'block',
+                // fontSize,
+                // fontSize: fontSize,
+                // height,
+                // width: '100%',
             }}
-        >
-            <div
-                style={{
-                    margin: 'auto',
-                    width: '80rem',
-                    height,
-                }}
-            >
-                <div
-                    className='mont-xbold'
-                    style={{
-                        // fontSize,
-                        fontSize: fontSize,
-                        color: COLORS.SAFFRON,
-                        height,
-                    }}
-                >Dollar Value Lost over Time</div>
-                <LossChart
-                    startYear={startYear}
-                    endYear={endYear}
-                    startZeroBasedMonth={startZeroBasedMonth}
-                    endZeroBasedMonth={endZeroBasedMonth}
-                // width={width}
-                // startingAmount={startingAmount}
-                // nowDollars={nowDollars}
-                // lostValue={lostValue}
-                />
-            </div>
-        </Row>
-
+        > Dollar Value Lost over Time</div >
     )
 }
 export default InflationChart;
+
+/* 
+ // <div
+        //     style={{
+        //         textAlign: 'center',
+        //         border: '1px solid chartreuse',
+        //         width: '100%',
+        //     }}
+        // >
+        {/* <div
+                style={{
+                    margin: 'auto',
+                    width: '80%',
+                    height,
+                }}
+            > 
+
+<LossChart
+    startYear={startYear}
+    endYear={endYear}
+    startZeroBasedMonth={startZeroBasedMonth}
+    endZeroBasedMonth={endZeroBasedMonth} />
+// </div>
+
+// )*/

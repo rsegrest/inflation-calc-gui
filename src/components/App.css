@@ -1,6 +1,12 @@
-.App, .InputFigure {
+#root {
+  margin: auto;
+}
+
+.App,
+.InputFigure {
   text-align: center;
   vertical-align: middle;
+  margin: auto;
 }
 
 .App-logo {
@@ -80,7 +86,8 @@ td {
   -webkit-font-smoothing: antialiased;
 }
 
-body, html {
+body,
+html {
   font-family: 'Montserrat'
 }
 

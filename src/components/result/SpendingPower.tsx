@@ -17,35 +17,38 @@ const SpendingPower = ({
 }) => {
     const deviceType = DeviceDetector();
 
-    let boxWidth = '20rem';
+    let boxWidth = '29%';
     let fontSize = 2.4;
-    let boxFloat = 'right';
+    // let boxFloat = 'right';
     let marginTop = '0';
     let divStyle = {
-        float: boxFloat,
+        // float: boxFloat,
+        float: 'left',
         background: '#F4C430', // saffron
         border: '5px solid black',
         borderRadius: '18px',
         width: boxWidth,
         marginTop,
-        padding: '1.2rem',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        padding: '.6rem',
+        marginLeft: '0.5rem',
+        marginRight: '0.5rem',
     }
     if (deviceType === 'Mobile') {
 
         fontSize = 1.2;
         divStyle = {
             ...divStyle,
-            width: '14rem',
-            float: 'center',
+            // width: '14rem',
+            // float: 'center',
             marginTop: '1rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            // marginLeft: 'auto',
+            // marginRight: 'auto',
         }
     }
     return (
-        <div style={divStyle as React.CSSProperties}>
+        <div
+            style={divStyle as React.CSSProperties}
+        >
             <div
                 className='mont-medium'
                 style={{

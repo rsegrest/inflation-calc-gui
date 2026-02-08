@@ -4,6 +4,7 @@ export const COLORS = {
     FIRE: '#C70039',
     BRICK: '#900C3F',
     SUNNY: '#FFD996',
+    BACKGROUND: '#FFD996',
 }
 
 export default COLORS;

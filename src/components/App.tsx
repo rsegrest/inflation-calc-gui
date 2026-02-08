@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Container from 'react-bootstrap/Container';
+// import Row from 'react-bootstrap/Row';
+// import Col from 'react-bootstrap/Col';
 import InflationHeader from './InflationHeader';
 import StartingAmountForm from './entry/StartingAmountForm';
 import DeviceDetector from '../util/DeviceDetector';
@@ -29,11 +29,11 @@ import "@fontsource/montserrat/800.css";
 
 import './App.css';
 
-const getWindowDimensions = () => {
+const calcCellDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window;
     return {
-        width,
-        height
+        width: width * .75,
+        height: height * .75
     };
 }
 const getChart = ({
@@ -72,27 +72,6 @@ const getChart = ({
         />
     )
 }
-// Move out
-// const callApi = async (
-//     {
-//         startingAmount,
-//         fromYear,
-//         toYear,
-//         fromMonth,
-//         toMonth,
-//     }: {
-//         startingAmount: number,
-//         fromYear: number,
-//         toYear: number,
-//         fromMonth: number,
-//         toMonth: number,
-//     }
-// ) => {
-//     const apiResponse: any = await getRequestToApi({ startingAmount, fromYear, toYear, fromMonth, toMonth });
-//     console.log(apiResponse.data)
-//     return apiResponse;
-// }
-// callApi();
 
 const App = () => {
 
@@ -147,13 +126,14 @@ const App = () => {
 
     }, [startingAmount, startYear, startZeroBasedMonth, endYear, endZeroBasedMonth, historicalStartCpi, historicalEndCpi])
 
-    const { width } = getWindowDimensions();
+    const { width } = calcCellDimensions();
     return (
-        <Container
+        <div
             style={{
                 border: '1px solid red',
                 width,
                 textAlign: 'center',
+                margin: 'auto',
             }}
         >
             {
@@ -184,49 +164,66 @@ const App = () => {
             }
             {
                 showResult ? (
-                    <Row
+                    <div
                         style={{
+                            border: '1px solid cyan',
                             paddingTop: '1rem',
                             paddingBottom: '1rem',
+                            minHeight: '10rem',
+                            maxHeight: '100rem',
+                            // display: 'block',
+                            // height: '100rem',
+                            // width: '100%',
+                            // margin: 'auto',
                         }}
                     >
-                        <Col>
-                            <ResultLayout
-                                width={width}
-                                nowDollars={nowDollars}
-                                thenDollars={thenDollars}
-                                startZeroBasedMonth={startZeroBasedMonth}
-                                startYear={startYear}
-                                inflationRate={inflationRate}
-                                lostValue={lostValue}
-                                timePeriodInMonths={timePeriodInMonths}
-                            // setNowDollars={setNowDollars}
-                            // setThenDollars={setThenDollars}
-                            // setStartZeroBasedMonth={setStartZeroBasedMonth}
-                            // setStartYear={setStartYear}
-                            // setInflationRate={setInflationRate}
-                            // setLostValue={setLostValue}
-                            // setTimePeriodInMonths={setTimePeriodInMonths}
-                            // setShowForm={setShowForm}
-                            // setShowResult={setShowResult}
-                            />
-                        </Col>
-                    </Row>
+                        <ResultLayout
+                            width={width}
+                            nowDollars={nowDollars}
+                            thenDollars={thenDollars}
+                            startZeroBasedMonth={startZeroBasedMonth}
+                            startYear={startYear}
+                            inflationRate={inflationRate}
+                            lostValue={lostValue}
+                            timePeriodInMonths={timePeriodInMonths}
+                            setShowForm={setShowForm}
+                            setShowResult={setShowResult}
+                        // setNowDollars={setNowDollars}
+                        // setThenDollars={setThenDollars}
+                        // setStartZeroBasedMonth={setStartZeroBasedMonth}
+                        // setStartYear={setStartYear}
+                        // setInflationRate={setInflationRate}
+                        // setLostValue={setLostValue}
+                        // setTimePeriodInMonths={setTimePeriodInMonths}
+                        />
+                    </div>
                 ) : null
             }
             {
-                showResult ? getChart({
-                    width,
-                    startYear,
-                    endYear,
-                    startZeroBasedMonth,
-                    endZeroBasedMonth,
-                    startingAmount,
-                    nowDollars,
-                    lostValue,
-                }) : null
+                showResult ? (
+                    <div
+                        style={{
+                            border: '1px solid white',
+                            // display: 'block',
+                            width: '100%',
+                            // margin: 'auto',
+                            textAlign: 'center',
+                        }}
+                    >
+                        {getChart({
+                            width,
+                            startYear,
+                            endYear,
+                            startZeroBasedMonth,
+                            endZeroBasedMonth,
+                            startingAmount,
+                            nowDollars,
+                            lostValue,
+                        })}
+                    </div>
+                ) : (<div>NO RESULT</div>)
             }
-        </Container>
+        </div>
     )
 }
 

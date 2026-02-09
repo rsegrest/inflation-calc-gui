@@ -82,3 +82,20 @@ export const defaultFormLabelStyle: React.CSSProperties = {
     margin: 'auto',
 }
 
+export let datePickerFormGroupStyle = {
+    display: 'block',
+    margin: 'auto',
+    width: '100%',
+    borderTop: '1px solid ' + COLORS.VERMILLION,
+    borderBottom: '1px solid ' + COLORS.VERMILLION,
+}
+export let useCurrentDateLabelStyle = {
+    display: 'inline',
+    marginRight: '1rem',
+}
+export let useCurrentDateFormGroupStyle = {
+    display: 'block',
+    width: '90%',
+    margin: 'auto',
+    paddingBottom: '0.5rem',
+}

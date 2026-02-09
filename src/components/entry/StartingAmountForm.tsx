@@ -5,13 +5,12 @@ import {
     adjustFigureWithInflation,
 } from '../../util/formulas';
 import {
-    // defaultDropdownStyle,
     defaultFormLabelStyle,
+    datePickerFormGroupStyle,
+    useCurrentDateLabelStyle,
+    useCurrentDateFormGroupStyle,
 } from '../constants/style';
 import { COLORS } from '../constants/colors';
-// import {
-//     mobileDropdownStyle,
-// } from '../constants/mobileStyle';
 import DatePicker from './DatePicker';
 import type { AxiosResponse } from 'axios';
 
@@ -85,24 +84,9 @@ const StartingAmountForm = (props: {
         width: '100%',
     }
 
-    // let dropdownStyle = defaultDropdownStyle;
     let formLabelStyle = defaultFormLabelStyle;
 
     let fullWidth = '60%';
-    if (deviceType === 'Mobile') {
-        fullWidth = '100%';
-        // dropdownStyle = mobileDropdownStyle;
-        formLabelStyle = {
-            ...defaultFormLabelStyle,
-            fontSize: '1.2rem',
-            width: '100%',
-        };
-    }
-
-    let dateColumnWidth = '100%';
-    if (!useCurrentDate && deviceType !== 'Mobile') {
-        dateColumnWidth = '45%';
-    }
     let outerDivStyle = {
         border: '5px solid ' + COLORS.VERMILLION,
         backgroundColor: COLORS.SUNNY,
@@ -113,8 +97,19 @@ const StartingAmountForm = (props: {
         marginTop: '1rem',
         marginBottom: '1rem',
         padding: '1rem',
-        // minWidth: '20rem',
-        // maxWidth: '100%',
+    }
+    if (deviceType === 'Mobile') {
+        fullWidth = '100%';
+        formLabelStyle = {
+            ...defaultFormLabelStyle,
+            fontSize: '1.2rem',
+            width: '100%',
+        };
+    }
+
+    let dateColumnWidth = '100%';
+    if (!useCurrentDate && deviceType !== 'Mobile') {
+        dateColumnWidth = '45%';
     }
     if (deviceType === 'Mobile') {
         outerDivStyle = {
@@ -168,18 +163,10 @@ const StartingAmountForm = (props: {
                 <Form.Group
                     className='form-inner-box starting-amount-box'
                     controlId="use-current-date"
-                    style={{
-                        display: 'block',
-                        width: '60%',
-                        margin: 'auto',
-                        paddingBottom: '0.5rem',
-                    }}
+                    style={useCurrentDateFormGroupStyle}
                 >
                     <Form.Label
-                        style={{
-                            display: 'inline',
-                            marginRight: '1rem',
-                        }}
+                        style={useCurrentDateLabelStyle}
                     >
                         Use Current Date as End Date:
                     </Form.Label>
@@ -198,13 +185,7 @@ const StartingAmountForm = (props: {
                 </Form.Group>
                 <Form.Group
                     controlId="date-picker-form"
-                    style={{
-                        display: 'block',
-                        margin: 'auto',
-                        width: '100%',
-                        borderTop: '1px solid ' + COLORS.VERMILLION,
-                        borderBottom: '1px solid ' + COLORS.VERMILLION,
-                    }}
+                    style={datePickerFormGroupStyle}
                 >
                     <DatePicker
                         labelPrefix="Start"
@@ -243,7 +224,6 @@ const StartingAmountForm = (props: {
                         display: 'block',
                     }}>
                     <Button
-                        // style={defaultButtonStyle}
                         className='default-button'
                         onClick={async () => {
                             const response = await getRequestToApi({

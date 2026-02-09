@@ -6,7 +6,6 @@ export const COLORS = {
     SUNNY: '#FFD996',
     BACKGROUND: '#FFD996',
 
-
     SLATE: '#2B2D42',
     BLUE: '#8D99AE',
     WHITE: '#EDF2F4',

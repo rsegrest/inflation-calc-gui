@@ -2,10 +2,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { defaultTitleStyle, subTitleStyle, latestDateStyle } from "./constants/style";
 import { getNameOfMonth } from '../util/formulas';
+// import COLORS from './constants/colors';
 
 const InflationHeader = ({ width, deviceType, latestDateWithData }: { width: number, deviceType: string, latestDateWithData: { month: number, year: number } }) => {
-    let headerFontSize = '5rem';
-    let subHeaderFontSize = '2.5rem';
+    let headerFontSize = '3.5rem';
+    let subHeaderFontSize = '1.2rem';
     let titleStyle = defaultTitleStyle;
     if (deviceType === 'Mobile') {
         headerFontSize = `${(Math.floor(width * .1))}px`;
@@ -38,7 +39,7 @@ const InflationHeader = ({ width, deviceType, latestDateWithData }: { width: num
                 } as React.CSSProperties}
             >
                 <Col>
-                    How inflation destroys
+                    See how inflation affects your income and savings
                 </Col>
             </Row>
             <Row

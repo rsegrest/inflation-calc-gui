@@ -15,10 +15,10 @@ const InflationChart = (props: {
 }) => {
     const { width, startYear, startZeroBasedMonth, endYear, endZeroBasedMonth } = props;
     let fontSize = '4rem';
-    let height = '10rem';
+    // let height = '10rem';
     if (width < 800) {
         fontSize = '1.2rem';
-        height = '20rem';
+        // height = '20rem';
     }
     return (
         <>
@@ -28,7 +28,7 @@ const InflationChart = (props: {
                     color: COLORS.VERMILLION,
                     fontSize,
                 }}
-            >Dollar Value Lost over Time</div>
+            >Dollar Value Lost over Time:</div>
             <div
                 style={{
                     backgroundColor: COLORS.SLATE,

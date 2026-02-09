@@ -4,6 +4,36 @@
   margin-top: 5%;
 }
 
+.default-button {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  background-color: #2b2d42;
+  color: #edf2f4;
+  border: 2px solid #8d99ae;
+  width: 100%;
+  margin: auto;
+  padding: 0.5rem;
+  margin-top: 1rem;
+}
+
+.back-button {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  border: 2px solid #8d99ae;
+  width: 100%;
+  margin: auto;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background-color: #c70039;
+  color: #ffd996;
+}
+
+.back-button:hover {
+  cursor: pointer;
+  background-color: #edf2f4;
+  color: #2b2d42;
+}
+
 .App,
 .InputFigure {
   text-align: center;

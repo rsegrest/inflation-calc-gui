@@ -1,24 +1,19 @@
-import * as React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import {
     getHistoricalCpi,
     adjustFigureWithInflation,
 } from '../../util/formulas';
-import type ReturnData from '../../dataInterface/ReturnData.interface';
 import {
-    defaultInputStyle,
-    defaultDropdownStyle,
+    // defaultDropdownStyle,
     defaultFormLabelStyle,
-    defaultButtonStyle,
 } from '../constants/style';
 import { COLORS } from '../constants/colors';
-import {
-    mobileInputStyle,
-    mobileDropdownStyle,
-} from '../constants/mobileStyle';
+// import {
+//     mobileDropdownStyle,
+// } from '../constants/mobileStyle';
 import DatePicker from './DatePicker';
+import type { AxiosResponse } from 'axios';
 
 const stripSpecialCharacters = (str: any) => {
     if (str === null || str === undefined) return '';
@@ -42,34 +37,42 @@ const restoreSpecialCharacters = (str: any) => {
 const StartingAmountForm = (props: {
     width: number,
     deviceType: string,
+    currentYear: number,
+    currentZeroBasedMonth: number,
     startingAmount: number,
-    setStartingAmount: (amount: number) => void,
     startZeroBasedMonth: number,
-    setStartZeroBasedMonth: (month: number) => void,
     startYear: number,
-    setStartYear: (year: number) => void,
     endYear: number,
-    setEndYear: (year: number) => void,
     endZeroBasedMonth: number,
+    useCurrentDate: boolean,
+    setStartingAmount: (amount: number) => void,
+    setStartZeroBasedMonth: (month: number) => void,
+    setStartYear: (year: number) => void,
+    setEndYear: (year: number) => void,
     setEndZeroBasedMonth: (month: number) => void,
     setNowDollars: (dollars: number) => void,
     setThenDollars: (dollars: number) => void,
     setShowResult: (show: boolean) => void,
     setShowForm: (show: boolean) => void,
-    getRequestToApi: (data: { startingAmount: number, fromYear: number, toYear: number, fromMonth: number, toMonth: number }) => Promise<{ data: ReturnData }>,
+    setUseCurrentDate: (useCurrentDate: boolean) => void,
+    getRequestToApi: (data: { startingAmount: number, fromYear: number, toYear: number, fromMonth: number, toMonth: number }) => Promise<void | AxiosResponse<any, any, {}>>,
 }) => {
     const {
-        width,
+        // width,
         deviceType,
+        currentYear,
+        currentZeroBasedMonth,
         startingAmount,
-        setStartingAmount,
         startZeroBasedMonth,
-        setStartZeroBasedMonth,
         startYear,
-        setStartYear,
         endYear,
-        setEndYear,
         endZeroBasedMonth,
+        useCurrentDate,
+        setUseCurrentDate,
+        setStartingAmount,
+        setStartZeroBasedMonth,
+        setStartYear,
+        setEndYear,
         setEndZeroBasedMonth,
         setNowDollars,
         setThenDollars,
@@ -82,13 +85,13 @@ const StartingAmountForm = (props: {
         width: '100%',
     }
 
-    let inputStyle = defaultInputStyle;
-    let dropdownStyle = defaultDropdownStyle;
+    // let dropdownStyle = defaultDropdownStyle;
     let formLabelStyle = defaultFormLabelStyle;
 
+    let fullWidth = '60%';
     if (deviceType === 'Mobile') {
-        inputStyle = mobileInputStyle;
-        dropdownStyle = mobileDropdownStyle;
+        fullWidth = '100%';
+        // dropdownStyle = mobileDropdownStyle;
         formLabelStyle = {
             ...defaultFormLabelStyle,
             fontSize: '1.2rem',
@@ -96,153 +99,152 @@ const StartingAmountForm = (props: {
         };
     }
 
-    const amountFormControl = (
-        <Form.Control
-            style={{
-                ...inputStyle,
-            } as React.CSSProperties}
-            className='mont-xbold'
-            type="text"
-            id="amountInput"
-            value={startingAmount}
-            onChange={(e) => {
-                const newString = stripSpecialCharacters(e.target.value);
-                if (typeof newString === 'undefined') {
-                    if (!isNaN(parseInt(e.target.value))) {
-                        const newStartingAmount = parseInt(e.target.value, 10);
-                        const newStartCpi = getHistoricalCpi(startYear, startZeroBasedMonth);
-                        const newEndCpi = getHistoricalCpi(endYear, endZeroBasedMonth);
-                        const newInflatedFigure = adjustFigureWithInflation(newStartingAmount, newStartCpi, newEndCpi);
-                        setStartingAmount(parseInt(e.target.value, 10));
-                        setNowDollars(newInflatedFigure);
-                        setThenDollars(newStartingAmount);
-                    } else {
-                        setStartingAmount(0);
-                    }
-                } else {
-                    setStartingAmount(parseInt(newString, 10))
-                }
-            }}
-            onFocus={() => { stripSpecialCharacters(startingAmount) }}
-            onBlur={() => { restoreSpecialCharacters(startingAmount) }}
-        >
-        </Form.Control>
-    );
-    const enableEndDate = true;
     let dateColumnWidth = '100%';
-    let fullWidth = '60%';
-    if (enableEndDate) {
+    if (!useCurrentDate && deviceType !== 'Mobile') {
         dateColumnWidth = '45%';
+    }
+    let outerDivStyle = {
+        border: '5px solid ' + COLORS.VERMILLION,
+        backgroundColor: COLORS.SUNNY,
+        borderRadius: '10px',
+        width: fullWidth,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: '1rem',
+        marginBottom: '1rem',
+        padding: '1rem',
+        // minWidth: '20rem',
+        // maxWidth: '100%',
+    }
+    if (deviceType === 'Mobile') {
+        outerDivStyle = {
+            ...outerDivStyle,
+        }
     }
     return (
         <div
-            style={{
-                border: '5px solid ' + COLORS.VERMILLION,
-                backgroundColor: COLORS.SUNNY,
-                borderRadius: '10px',
-                minWidth: '20rem',
-                width: fullWidth,
-                maxWidth: '100%',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-                marginTop: '1rem',
-                marginBottom: '1rem',
-                padding: '1rem',
-            }}
+            style={outerDivStyle}
         >
-            <div
+            <Form
                 className='form-outer-box'
-                style={{
-                    margin: 'auto',
-                    width: '100%',
-                }}>
-                <div
+            >
+                <Form.Group
+                    style={{ display: 'block', width: '60%', margin: 'auto', }}
+                    className='mb-3'
+                    controlId="form-starting-amount"
+                >
+                    <Form.Label>
+                        Starting Amount:
+                    </Form.Label>
+
+                    <Form.Control
+                        className='mont-xbold'
+                        type="text"
+                        id="amountInput"
+                        value={startingAmount}
+                        onChange={(e) => {
+                            const newString = stripSpecialCharacters(e.target.value);
+                            if (typeof newString === 'undefined') {
+                                if (!isNaN(parseInt(e.target.value))) {
+                                    const newStartingAmount = parseInt(e.target.value, 10);
+                                    const newStartCpi = getHistoricalCpi(startYear, startZeroBasedMonth);
+                                    const newEndCpi = getHistoricalCpi(endYear, endZeroBasedMonth);
+                                    const newInflatedFigure = adjustFigureWithInflation(newStartingAmount, newStartCpi, newEndCpi);
+                                    setStartingAmount(parseInt(e.target.value, 10));
+                                    setNowDollars(newInflatedFigure);
+                                    setThenDollars(newStartingAmount);
+                                } else {
+                                    setStartingAmount(0);
+                                }
+                            } else {
+                                setStartingAmount(parseInt(newString, 10))
+                            }
+                        }}
+                        onFocus={() => { stripSpecialCharacters(startingAmount) }}
+                        onBlur={() => { restoreSpecialCharacters(startingAmount) }}
+                    >
+                    </Form.Control>
+                </Form.Group>
+                <Form.Group
                     className='form-inner-box starting-amount-box'
+                    controlId="use-current-date"
                     style={{
-                        // width: dateColumnWidth,
                         display: 'block',
+                        width: '60%',
                         margin: 'auto',
+                        paddingBottom: '0.5rem',
                     }}
                 >
-                    <FloatingLabel
-                        className='mont-semibold'
-                        style={formLabelStyle}
-                        label="Starting Amount:"
+                    <Form.Label
+                        style={{
+                            display: 'inline',
+                            marginRight: '1rem',
+                        }}
                     >
-                    </FloatingLabel>
-                    <div style={formCellStyle}>
-                        {amountFormControl}
-                    </div>
-                </div>
-                <DatePicker
-                    dateColumnWidth={dateColumnWidth}
-                    formLabelStyle={formLabelStyle}
-                    formCellStyle={formCellStyle}
-                    // selectMonthForm={selectMonthForm}
-                    // selectYearForm={selectYearForm}
-                    zeroBasedMonth={startZeroBasedMonth}
-                    setZeroBasedMonth={setStartZeroBasedMonth}
-                    year={startYear}
-                    setYear={setStartYear}
-                />
-                {/* <div
-                    className='form-inner-box start-date-box'
+                        Use Current Date as End Date:
+                    </Form.Label>
+                    <Form.Switch
+                        type="switch"
+                        id="custom-switch"
+                        style={{
+                            display: 'inline',
+                            margin: 'auto',
+                        }}
+                        checked={useCurrentDate}
+                        onChange={(e) => {
+                            setUseCurrentDate(e.target.checked);
+                        }}
+                    />
+                </Form.Group>
+                <Form.Group
+                    controlId="date-picker-form"
                     style={{
-                        display: 'inline-block',
-                        width: dateColumnWidth,
-                        marginRight: '1rem',
-                    }}>
-                    <div
-                        style={{
-                            display: 'inline-block',
-                        }}
-                    >
-                        <FloatingLabel
-                            className='mont-semibold'
-                            style={formLabelStyle}
-                            label="Start Month:"
-                        >
-                        </FloatingLabel>
-                        <div style={formCellStyle}>
-                            {selectMonthForm(startZeroBasedMonth, setStartZeroBasedMonth)}
-                        </div>
-                    </div>
-                    <div
-                        style={{
-                            width: '100%',
-                            display: 'block',
-                        }}
-                    >
-                        <FloatingLabel
-                            className='mont-semibold'
-                            style={formLabelStyle}
-                            label="Start Year:"
-                        >
-                        </FloatingLabel>
-                        <div style={formCellStyle}>
-                            {selectYearForm(startYear, setStartYear)}
-                        </div>
-                    </div>
-                </div> */}
-                {
-                    enableEndDate && (
-                        <DatePicker
-                            dateColumnWidth={dateColumnWidth}
-                            formLabelStyle={formLabelStyle}
-                            formCellStyle={formCellStyle}
-                            zeroBasedMonth={endZeroBasedMonth}
-                            setZeroBasedMonth={setEndZeroBasedMonth}
-                            year={endYear}
-                            setYear={setEndYear}
-                        />
-                    )}
+                        display: 'block',
+                        margin: 'auto',
+                        width: '100%',
+                        borderTop: '1px solid ' + COLORS.VERMILLION,
+                        borderBottom: '1px solid ' + COLORS.VERMILLION,
+                    }}
+                >
+                    <DatePicker
+                        labelPrefix="Start"
+                        deviceType={deviceType}
+                        currentYear={currentYear}
+                        currentZeroBasedMonth={currentZeroBasedMonth}
+                        dateColumnWidth={dateColumnWidth}
+                        formLabelStyle={formLabelStyle}
+                        formCellStyle={formCellStyle}
+                        zeroBasedMonth={startZeroBasedMonth}
+                        setZeroBasedMonth={setStartZeroBasedMonth}
+                        year={startYear}
+                        setYear={setStartYear}
+                    />
+                    {
+                        !useCurrentDate && (
+                            <DatePicker
+                                deviceType={deviceType}
+                                labelPrefix="End"
+                                currentYear={currentYear}
+                                currentZeroBasedMonth={currentZeroBasedMonth}
+                                dateColumnWidth={dateColumnWidth}
+                                formLabelStyle={formLabelStyle}
+                                formCellStyle={formCellStyle}
+                                zeroBasedMonth={endZeroBasedMonth}
+                                setZeroBasedMonth={setEndZeroBasedMonth}
+                                year={endYear}
+                                setYear={setEndYear}
+                            />
+                        )
+                    }
+                </Form.Group>
                 <div
                     style={{
                         width: '100%',
                         display: 'block',
                     }}>
                     <Button
-                        style={defaultButtonStyle}
+                        // style={defaultButtonStyle}
+                        className='default-button'
                         onClick={async () => {
                             const response = await getRequestToApi({
                                 startingAmount,
@@ -258,8 +260,8 @@ const StartingAmountForm = (props: {
                         }}
                     >SUBMIT</Button>
                 </div>
-            </div>
-        </div>
+            </Form >
+        </div >
     )
 }
 

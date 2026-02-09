@@ -106,6 +106,37 @@ export const getMonths = () => {
     return monthArray;
 }
 
+export const getChartMonthLabel = (monthNum:number, year:number) => {
+    console.log(`getNameOfMonth : ${monthNum}, type is ${typeof monthNum}`)
+    switch(monthNum) {
+        case 0:
+            return 'Jan ' + year;
+        case 1:
+            return 'Feb ' + year;
+        case 2:
+            return 'Mar ' + year;
+        case 3:
+            return 'Apr ' + year;
+        case 4:
+            return 'May ' + year;
+        case 5:
+            return 'Jun ' + year;
+        case 6:
+            return 'Jul ' + year;
+        case 7:
+            return 'Aug ' + year;
+        case 8:
+            return 'Sep ' + year;
+        case 9:
+            return 'Oct ' + year;
+        case 10:
+            return 'Nov ' + year;
+        case 11:
+            return 'Dec ' + year;
+        default:
+            return 'Not a Month';
+    }
+}
 export const getNameOfMonth = (monthNum:number) => {
     console.log(`getNameOfMonth : ${monthNum}, type is ${typeof monthNum}`)
     switch(monthNum) {

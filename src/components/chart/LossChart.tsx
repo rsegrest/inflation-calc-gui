@@ -10,6 +10,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { CPI_DATA } from '../../data/cpidata';
+import { getChartMonthLabel } from '../../util/formulas';
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +22,10 @@ ChartJS.register(
   Legend
 );
 
-const getOptions = () => {
+const getOptions = (
+  startZeroBasedMonth: number,
+  startYear: number,
+) => {
   return {
     maintainAspectRatio: true,
     responsive: true,
@@ -34,24 +38,31 @@ const getOptions = () => {
       }
     },
     scales: {
-      yAxes: {
+      y: {
         grid: {
           color: '#999999',
         },
         ticks: {
           color: 'white',
           fontSize: 14,
+          callback: function (value: number | string, _index: number, _ticks: any[]) {
+            const numVal = typeof value === 'string' ? parseFloat(value) : value;
+            return '$' + numVal.toFixed(2);
+          }
         }
       },
-      xAxes: {
+      x: {
         grid: {
           color: '#999999',
         },
         ticks: {
           color: 'white',
           fontSize: 18,
+          callback: function (_value: number | string, index: number, _ticks: any[]) {
+            return getChartMonthLabel(((index + startZeroBasedMonth) % 12), startYear + Math.floor((index + startZeroBasedMonth) / 12));
+          }
         }
-      }
+      },
     },
     plugins: {
       legend: {
@@ -80,11 +91,7 @@ const generateLabelArray = (
       } else if (j === endYear && j > endZeroBasedMonth) {
         break;
       }
-      if (j === 0) {
-        labelArray.push(`Jan ${i}`);
-      } else {
-        labelArray.push((j + 1).toString())
-      }
+      labelArray.push(getChartMonthLabel(j, i));
     }
   }
   return labelArray;
@@ -156,7 +163,7 @@ const LossChart = ({
   const initialCpi = (CPI_DATA[yearIndex as keyof typeof CPI_DATA] as number[])[startZeroBasedMonth];
   const cpiData = mapCpiData(initialCpi, startYear, startZeroBasedMonth, endYear, endZeroBasedMonth)
   const data = getData(labelArray, cpiData);
-  const options = getOptions();
+  const options = getOptions(startZeroBasedMonth, startYear);
   let chartWidth = '100%';
 
   return <Line

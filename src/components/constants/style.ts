@@ -30,19 +30,15 @@ export let minorEmphasisDefault: React.CSSProperties = {
     fontSize: '1.2rem'
 }
 
-
-export const defaultTableStyle: React.CSSProperties = {
-    border: 'none',
-    textAlign: 'center',
-    margin: 'auto',
-};
 export const defaultTitleStyle: React.CSSProperties = {
-    fontSize: '5rem',
-    marginTop: '10%',
+    fontSize: '4rem',
+    // marginTop: '10%',
     textAlign: 'center',
     color: COLORS.VERMILLION,
     border: 'none',
 }
+
+
 
 export const subTitleStyle: React.CSSProperties = {
     textAlign: 'center',
@@ -53,14 +49,13 @@ export const subTitleStyle: React.CSSProperties = {
 export const latestDateStyle: React.CSSProperties = {
     textAlign: 'center',
     color: COLORS.BLUE,
-    // color: 'black',
     border: 'none',
-    fontSize: '1rem',
-    marginBottom: '1rem',
+    fontSize: '0.8rem',
+    marginBottom: '0.5rem',
+    marginTop: '0.5rem',
 }
 
 export const defaultFormStyle: React.CSSProperties = {
-    // display: 'block',
     color: COLORS.SLATE,
     backgroundColor: COLORS.WHITE,
     border: `2px solid ${COLORS.BLUE}`,
@@ -68,11 +63,9 @@ export const defaultFormStyle: React.CSSProperties = {
     textAlign: 'center',
     fontSize: '1.4rem',
     height: '3.5rem',
-    // width: '10rem',
 }
 export const defaultInputStyle: React.CSSProperties = {
     ...defaultFormStyle,
-    // display: 'block',
     margin: 'auto',
     marginBottom: '2rem',
 }
@@ -89,14 +82,3 @@ export const defaultFormLabelStyle: React.CSSProperties = {
     margin: 'auto',
 }
 
-export const defaultButtonStyle: React.CSSProperties = {
-    fontFamily: 'Montserrat',
-    fontWeight: 'bold',
-    backgroundColor: COLORS.SLATE,
-    color: COLORS.WHITE,
-    border: `2px solid ${COLORS.BLUE}`,
-    minWidth: '8rem',
-    maxWidth: '12rem',
-    padding: '0.5rem',
-    marginTop: '1rem',
-}

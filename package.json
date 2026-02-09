@@ -1,7 +1,7 @@
 {
   "name": "inflation-calc-gui",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,6 +15,7 @@
     "@fontsource/montserrat": "^5.2.8",
     "@observablehq/plot": "^0.6.17",
     "axios": "^1.13.4",
+    "bootstrap": "^5.3.8",
     "chart.js": "^4.5.1",
     "d3": "^7.9.0",
     "react": "^19.2.0",

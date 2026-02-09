@@ -29,13 +29,12 @@ import "@fontsource/montserrat/600-italic.css";
 import "@fontsource/montserrat/700.css";
 import "@fontsource/montserrat/700-italic.css";
 import "@fontsource/montserrat/800.css";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import SpendingPower from './result/SpendingPower';
 import InflationRate from './result/InflationRate';
 import LostValue from './result/LostValue';
 import Button from 'react-bootstrap/esm/Button';
-import { defaultButtonStyle } from './constants/style';
 
 const calcCellDimensions = (deviceType: string) => {
     const { innerWidth: width, innerHeight: height } = window;
@@ -43,7 +42,7 @@ const calcCellDimensions = (deviceType: string) => {
     if (deviceType === 'Mobile') {
         w = width * .95;
     } else {
-        w = width * .75;
+        w = width * .60;
     }
     return {
         width: w,
@@ -54,13 +53,11 @@ const calcCellDimensions = (deviceType: string) => {
 const App = () => {
 
     const nowDate = new Date();
-    let currentYear = nowDate.getFullYear();
-    const latestDateWithData = getLatestDateWithData(nowDate.getMonth(), currentYear);
-    currentYear = latestDateWithData.year;
-    let currentZeroBasedMonth = latestDateWithData.month;
+    const latestDateWithData = getLatestDateWithData(nowDate.getMonth(), nowDate.getFullYear());
 
     const [deviceType, setDeviceType] = React.useState(DeviceDetector());
-
+    const [currentYear] = React.useState(latestDateWithData.year);
+    const [currentZeroBasedMonth] = React.useState(latestDateWithData.month);
     const [startingAmount, setStartingAmount] = React.useState(1000);
     const [startZeroBasedMonth, setStartZeroBasedMonth] = React.useState(currentZeroBasedMonth);
     const [startYear, setStartYear] = React.useState((currentYear - 10));
@@ -80,6 +77,8 @@ const App = () => {
 
     const [timePeriodInMonths, setTimePeriodInMonths] = React.useState(calculateTimespanMonths(startYear, startZeroBasedMonth, endYear, endZeroBasedMonth));
     const [lostValue, setLostValue] = React.useState(calculateLossPercentage(historicalStartCpi, historicalEndCpi));
+
+    const [useCurrentDate, setUseCurrentDate] = React.useState(true);
 
     React.useEffect(() => {
         setHistoricalStartCpi(getHistoricalCpi(startYear, startZeroBasedMonth));
@@ -106,19 +105,34 @@ const App = () => {
 
         // const deviceType = DeviceDetector();
         setDeviceType(DeviceDetector());
-        // console.log(`deviceType : ${deviceType}`)
 
     }, [startingAmount, startYear, startZeroBasedMonth, endYear, endZeroBasedMonth, historicalStartCpi, historicalEndCpi])
 
     let width = calcCellDimensions(deviceType).width;
 
+    let outerStyle: React.CSSProperties = {
+        width: '50rem',
+        backgroundColor: '#bed6dbff',
+        border: '3px solid white',
+        textAlign: 'center',
+        margin: 'auto',
+        borderRadius: '1rem',
+        padding: '2rem',
+    }
+    if (deviceType === 'Mobile') {
+        outerStyle = {
+            width: '100%',
+            backgroundColor: '#bed6dbff',
+            border: '3px solid white',
+            textAlign: 'center',
+            margin: 'auto',
+            borderRadius: '1rem',
+            padding: '2rem',
+        }
+    }
     return (
         <div
-            style={{
-                width,
-                textAlign: 'center',
-                margin: 'auto',
-            }}
+            style={outerStyle}
         >
             {
                 showForm ? (
@@ -131,15 +145,19 @@ const App = () => {
                         <StartingAmountForm
                             width={width}
                             deviceType={deviceType}
+                            currentYear={currentYear}
+                            currentZeroBasedMonth={currentZeroBasedMonth}
                             startingAmount={startingAmount}
-                            setStartingAmount={setStartingAmount}
                             startZeroBasedMonth={startZeroBasedMonth}
-                            setStartZeroBasedMonth={setStartZeroBasedMonth}
                             endZeroBasedMonth={endZeroBasedMonth}
-                            setEndZeroBasedMonth={setEndZeroBasedMonth}
                             startYear={startYear}
-                            setStartYear={setStartYear}
                             endYear={endYear}
+                            useCurrentDate={useCurrentDate}
+                            setUseCurrentDate={setUseCurrentDate}
+                            setStartingAmount={setStartingAmount}
+                            setStartZeroBasedMonth={setStartZeroBasedMonth}
+                            setEndZeroBasedMonth={setEndZeroBasedMonth}
+                            setStartYear={setStartYear}
                             setEndYear={setEndYear}
                             setNowDollars={setNowDollars}
                             setThenDollars={setThenDollars}
@@ -159,12 +177,21 @@ const App = () => {
                         }}
                     >
                         <Button
-                            style={defaultButtonStyle}
+                            className='back-button'
+                            // style={backButtonStyle}
+                            // onMouseEnter={() => {
+                            //     backButtonStyle = { ...defaultButtonStyle, backgroundColor: COLORS.FIRE, color: COLORS.SUNNY, cursor: 'pointer' }
+                            // }}
+                            // onMouseLeave={() => {
+                            //     backButtonStyle = { ...defaultButtonStyle, backgroundColor: COLORS.FIRE, color: COLORS.SUNNY }
+                            // }}
                             onClick={() => {
                                 setShowForm(true);
                                 setShowResult(false);
                             }}
-                        >New Calculation</Button>
+                        >
+                            {'New Date Range'}
+                        </Button>
                     </div>
                     <div
                         style={{

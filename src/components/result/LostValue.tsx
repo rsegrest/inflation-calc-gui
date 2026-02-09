@@ -18,7 +18,7 @@ let lostValueBox = {
 
 const hotType = {
     fontSize: '1.2rem',
-    color: COLORS.FLAME
+    color: COLORS.FLAME,
 };
 
 const lostType = {
@@ -29,11 +29,9 @@ const lostType = {
 };
 
 const LostValue = ({
-    // width,
     lostValue,
     timePeriodInMonths
 }: {
-    // width: number,
     lostValue: number,
     timePeriodInMonths: number,
 }) => {
@@ -47,7 +45,6 @@ const LostValue = ({
             ...boxStyle,
             width: '14rem',
             marginLeft: 'auto',
-            // marginTop: '0',
         }
     }
     return (
@@ -65,18 +62,18 @@ const LostValue = ({
                 className='mont-xbold'
                 style={lostType}
             >
-                $$$
+                {'$$$'}
             </div>
             <div
                 style={lightTextColorDefault}
             >
-                have
+                {'have'}
             </div>
             <div
                 className='mont-xbold'
                 style={lostType}
             >
-                LOST
+                {'LOST'}
             </div>
             <div
                 className='mont-xbold'
@@ -87,7 +84,7 @@ const LostValue = ({
             <div
                 style={lightTextColorDefault}
             >
-                of their value in
+                {'of their value in'}
             </div>
             <div
                 className='mont-bold'

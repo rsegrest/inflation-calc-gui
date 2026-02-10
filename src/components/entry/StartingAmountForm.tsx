@@ -135,7 +135,6 @@ const StartingAmountForm = (props: {
                     <Form.Control
                         className='mont-xbold'
                         type="text"
-                        id="amountInput"
                         value={startingAmount}
                         onChange={(e) => {
                             const newString = stripSpecialCharacters(e.target.value);
@@ -226,14 +225,13 @@ const StartingAmountForm = (props: {
                     <Button
                         className='default-button'
                         onClick={async () => {
-                            const response = await getRequestToApi({
+                            await getRequestToApi({
                                 startingAmount,
                                 fromYear: startYear,
                                 toYear: endYear,
                                 fromMonth: startZeroBasedMonth,
                                 toMonth: endZeroBasedMonth,
                             });
-                            console.log(response);
 
                             setShowForm(false);
                             setShowResult(true);

@@ -15,7 +15,6 @@ export const getHistoricalCpi = (year:number, month:number = 0) => {
     const cpiData = JSON.parse(cpiDataString);
     const cpiYearDataArray = cpiData[year.toString()];
     const cpiMonthData = cpiYearDataArray[month.toString()];
-    console.log('getHistoricalCpi: ' + year + ', ' + month + ', ' + cpiMonthData);
     return cpiMonthData;
 }
 
@@ -53,9 +52,7 @@ export const getLatestDateWithData = (currentMonth:number, year:number):{
 } => {
     let latestMonth = currentMonth;
     let latestYear = year;
-    let i = 0;
     while (getHistoricalCpi(latestYear,latestMonth) === null) {
-        console.log('while: ' + i);
         latestMonth -= 1;
         if (latestMonth < 0) {
             latestYear -= 1;
@@ -107,7 +104,6 @@ export const getMonths = () => {
 }
 
 export const getChartMonthLabel = (monthNum:number, year:number) => {
-    console.log(`getNameOfMonth : ${monthNum}, type is ${typeof monthNum}`)
     switch(monthNum) {
         case 0:
             return 'Jan ' + year;
@@ -138,7 +134,6 @@ export const getChartMonthLabel = (monthNum:number, year:number) => {
     }
 }
 export const getNameOfMonth = (monthNum:number) => {
-    console.log(`getNameOfMonth : ${monthNum}, type is ${typeof monthNum}`)
     switch(monthNum) {
         case 0:
             return 'January';

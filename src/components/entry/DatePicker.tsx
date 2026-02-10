@@ -7,8 +7,6 @@ const getYearArray = (currentYear: number) => {
     for (let i = currentYear; i > 1913; i -= 1) {
         yearArray.push(i)
     }
-    console.log(`currentYear : ${currentYear}`)
-    console.log(`yearArray : ${yearArray}`)
     return yearArray;
 }
 export const DatePicker = (props: {

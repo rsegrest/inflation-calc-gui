@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest",
-    "start": "vite"
+    "start": "serve -s dist -l $PORT"
   },
   "dependencies": {
     "@fontsource/montserrat": "^5.2.8",
@@ -21,7 +21,8 @@
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-chartjs-2": "^5.3.1",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "serve": "^14.2.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
